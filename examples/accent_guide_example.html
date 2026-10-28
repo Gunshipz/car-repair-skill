@@ -1,0 +1,845 @@
+<title>Accent Shift Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one narrow reading column for a phone held over an engine bay; full-width figures with numbered pins; decision results in colored rows. */
+:root{
+  --bg:#f3f4f6; --panel:#ffffff; --fg:#1b1f24; --muted:#5b636d; --line:#d5d9df;
+  --accent:#c94f1c; --accent-ink:#6b2408; --good:#2c7a4b; --bad:#b3362c; --warn:#a86a00;
+  --pin:#ff7a2f; --pin-ink:#1a0a00;
+  --f-display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#14171b; --panel:#1d2127; --fg:#e6e9ed; --muted:#9aa3ad; --line:#323840;
+  --accent:#ff8a4c; --accent-ink:#ffc9a8; --good:#5cc187; --bad:#ef7468; --warn:#e6b450; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#14171b; --panel:#1d2127; --fg:#e6e9ed; --muted:#9aa3ad; --line:#323840;
+  --accent:#ff8a4c; --accent-ink:#ffc9a8; --good:#5cc187; --bad:#ef7468; --warn:#e6b450; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:17px/1.55 var(--f-body)}
+.wrap{max-width:760px;margin:0 auto;padding-block:20px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:30px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:1.9rem;font-weight:800}
+h2{font-size:1.35rem;font-weight:800;padding-top:6px;border-top:3px solid var(--accent)}
+h3{font-size:1.05rem;font-weight:600}
+p{margin:0}
+a{color:var(--accent-ink)}
+section{display:flex;flex-direction:column;gap:14px}
+.sub{color:var(--muted)}
+.tag{font:500 .72rem var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.callout{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.warn{border-left-color:var(--bad)}
+.goodc{border-left-color:var(--good)}
+code,.mono{font-family:var(--f-mono);font-size:.86em}
+.read{font-family:var(--f-mono);font-size:.82em;padding:1px 6px;border-radius:4px;border:1px solid var(--line);background:var(--bg);white-space:nowrap}
+.ok{color:var(--good);font-weight:600}.no{color:var(--bad);font-weight:600}.mid{color:var(--warn);font-weight:600}
+figure{margin:0;display:flex;flex-direction:column;gap:8px}
+.shot{position:relative;width:100%;max-width:100%;border-radius:6px;overflow:hidden;border:1px solid var(--line);background:#fff}
+.shot img{display:block;width:100%;height:auto}
+.pinm{position:absolute;transform:translate(-50%,-50%);width:28px;height:28px;border-radius:50%;background:var(--pin);color:var(--pin-ink);font:800 14px/28px var(--f-display);text-align:center;box-shadow:0 0 0 3px rgba(0,0,0,.6)}
+figcaption{font-size:.9rem;color:var(--muted)}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.pair>*{min-width:0}
+ol.legend,ul.plain{margin:0;padding-left:1.9em;display:flex;flex-direction:column;gap:6px}
+ol.steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:18px;counter-reset:s}
+ol.steps>li{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:10px;counter-increment:s}
+ol.steps>li>h3::before{content:"Test " counter(s) " · ";color:var(--accent)}
+.res{display:grid;grid-template-columns:minmax(0,11em) 1fr;gap:10px 12px;align-items:baseline}
+.res>*{min-width:0}
+.res>.read{white-space:normal;overflow-wrap:anywhere;line-height:1.35}
+@media (max-width:520px){.res{grid-template-columns:1fr;gap:4px}.res>.read{justify-self:start;margin-top:8px}}
+.time{font:500 .75rem var(--f-mono);color:var(--muted)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{border-bottom:1px solid var(--line);padding:7px 6px;text-align:left;vertical-align:top}
+th{font:600 .72rem var(--f-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+svg text{font-family:var(--f-body)}
+.fl-box{fill:var(--panel);stroke:var(--fg);stroke-width:1.4}
+.fl-good{fill:var(--panel);stroke:var(--good);stroke-width:2}
+.fl-bad{fill:var(--panel);stroke:var(--bad);stroke-width:2}
+.fl-t{fill:var(--fg);font-size:13px}
+.fl-s{fill:var(--muted);font-size:11px}
+.fl-l{stroke:var(--muted);stroke-width:1.6;fill:none}
+.fl-y{fill:var(--good);font-size:11px;font-weight:600}
+.fl-n{fill:var(--bad);font-size:11px;font-weight:600}
+.flow{display:flex;flex-direction:column;gap:4px}
+.fstep{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:8px 12px;display:flex;flex-direction:column;gap:2px}
+.fstep span,.fout span{color:var(--muted);font-size:.9rem}
+.fkey{border:2px solid var(--accent)}
+.farrow{text-align:center;color:var(--muted);line-height:1}
+.forks{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:8px}
+.fout{background:var(--panel);border:2px solid var(--line);border-radius:6px;padding:8px 12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.fgood{border-color:var(--good)}.fbad{border-color:var(--bad)}
+@media (max-width:520px){table.stack thead{display:none}table.stack tr{display:block;padding:8px 0;border-bottom:1px solid var(--line)}table.stack td{display:block;border:0;padding:2px 0;white-space:normal}table.stack td:first-child{font-weight:600}}
+.jump{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.92rem}
+</style>
+
+<div class="wrap">
+
+<p class="sub"><em>Example guide from the car-repair skill. The photos and factory figures it was published with are not included in this repository; the image slots and pin positions are left in place as a template.</em></p>
+<header style="display:flex;flex-direction:column;gap:8px">
+  <span class="tag">2010 Hyundai Accent · 1.6 L · M5CF1 5-speed manual</span>
+  <h1>Accent Shift Guide</h1>
+  <p class="sub">Symptom: popped out of gear on the highway, and now the shifter won't go into any gear. The clutch master and slave are new and the clutch seems to work. This page walks the tests in order, cheapest first, shows where each part is, and lists what each result means and what it costs to fix.</p>
+</header>
+
+<div class="callout">
+  <strong>The one question this page answers</strong>
+  <p>Is the problem <strong>outside</strong> the transmission (the two shift cables, their end bushings, the cable bracket, the shifter, or an engine mount) or <strong>inside</strong> it (a shift fork, detent spring or interlock)? Outside fixes run <span class="read">$25–$230</span>. Inside means a used transmission, <span class="read">$180–$600</span> DIY (Utah self-pull yards start at $135) or about <span class="read">$900–$1,650</span> at a shop. Test 4 settles it in about 20 minutes, with no parts.</p>
+</div>
+
+<nav class="jump"><a href="#questions">Questions for the owner</a> · <a href="#appendix-common">Is this common?</a> · <a href="#appendix-rr">Pulling the transmission and clutch</a> · <a href="#appendix-rebuild">Rebuilding it</a> · <a href="#appendix-findings">Things we might find</a></nav>
+<div class="callout warn">
+  <strong>Safety</strong>
+  <p>For the roll test, the car is in neutral on flat ground with the parking brake off, so have someone in the driver's seat with a foot on the brake. Anything under the car goes on jack stands, never on just a jack. Engine off for everything except where a step says otherwise.</p>
+</div>
+
+<section id="questions">
+  <h2>Questions for the owner</h2>
+  <p>Answers to these make the research targeted: the right part numbers, the right donor transmission, and fewer wasted tests. Most take a minute at the car. Photos are better than descriptions.</p>
+  <h3>The car itself</h3>
+  <ol class="legend">
+    <li><strong>The VIN</strong> (17 characters, on the dash at the windshield's lower corner or on the door-jamb sticker). It decodes trim and engine, and lets a dealer match exact part numbers.</li>
+    <li><strong>A photo of the driver's door-jamb sticker.</strong> The build month decides between two different factory transmissions: <code>43000-23017</code> (built through January 2010) and <code>43000-32818</code> (built from June 2010). Their shift forks and other internal parts differ.</li>
+    <li><strong>Trim: GS, GLS, SE or Blue?</strong> Used-transmission sellers file the Blue model's manual in a separate group.</li>
+    <li><strong>Mileage</strong>, and whether he knows it's the original transmission and clutch.</li>
+    <li><strong>A photo of the transmission's ID tag or casting stamp</strong> (on top of the case near the cable levers, once the air box is off). It says M5CF1 or M5CF1-1 and the final-drive ratio, which is what a yard needs to match a donor.</li>
+  </ol>
+  <h3>What happened</h3>
+  <ol class="legend" start="6">
+    <li><strong>Which gear was it in</strong> when it popped out, and at what speed? Accelerating, cruising, or letting off the gas? A pop-out under load points one way; one while coasting points another.</li>
+    <li><strong>Any noise at that moment</strong>: a bang, a clunk, grinding, or a whine that had been building?</li>
+    <li><strong>Any warning before</strong>: popping out of that gear before, a sloppy or vibrating stick, grinding into any gear, a clunk when getting on or off the gas (a clunk suggests a bad mount)?</li>
+    <li><strong>Since then: what does the stick do with the engine off?</strong> Does it move side to side? Forward and back? Locked solid, or floppy? This is test 1, and the single most useful answer.</li>
+    <li><strong>Does the car roll freely in neutral?</strong> (Test 2.)</li>
+    <li><strong>Has anyone forced the stick</strong>, or worked on it since?</li>
+  </ol>
+  <h3>History</h3>
+  <ol class="legend" start="12">
+    <li><strong>Why and when were the clutch master and slave replaced?</strong> What was the symptom then? Who did it, and was the line bled? Did the shifting feel normal afterward?</li>
+    <li><strong>Has the gear oil ever been changed</strong>, or checked? Any oil drips under the transmission?</li>
+    <li><strong>Any other work near the shifter or transmission</strong>: starter, mounts, axles, center console, or an accident?</li>
+    <li><strong>Has the shifter felt loose</strong> or vague for a while? Worn cable bushings show up first as slop.</li>
+  </ol>
+  <p class="sub">Each answer narrows the search. The build date and VIN fix the part numbers. The engine-off stick behavior and the roll test split cable problems from internal ones. The pop-out details point to one fork or synchro.</p>
+</section>
+
+
+<section>
+  <h2>How the shifting works</h2>
+  <p>The gear stick isn't connected to the transmission by a rod. Two steel cables run from the base of the stick, through the firewall, to two small levers on top of the transmission:</p>
+  <ul class="plain">
+    <li>The <strong>select cable</strong> moves when the stick goes <em>side to side</em>. It picks the column: 1-2, 3-4, or 5-R.</li>
+    <li>The <strong>shift cable</strong> moves when the stick goes <em>forward and back</em>. It pushes the chosen gear in.</li>
+  </ul>
+  <p>Inside the transmission, those levers turn a <strong>control shaft</strong>, and its finger slides one of three <strong>shift rails</strong>. Each rail carries a <strong>fork</strong> that slides a gear's locking collar into place. Two small safety parts matter here:</p>
+  <ul class="plain">
+    <li>A spring-loaded <strong>poppet (detent) ball</strong> clicks each rail into place, so a gear stays in. A broken poppet spring lets a gear pop out.</li>
+    <li>An <strong>interlock</strong> stops two rails from moving at once. If one rail is stuck partway into a gear, the interlock holds <em>every other</em> rail in place, and the stick feels locked in every direction. That fits "popped out of 5th, now nothing will go in."</li>
+  </ul>
+  <p>Hyundai's own troubleshooting table for this transmission lists, under "Jumps out of gear": <em>worn gear shift fork or broken poppet spring</em>, and <em>synchronizer hub-to-sleeve spline clearance too large</em>. Both are inside the case. Outside causes that forums report on these cars are worn cable-end bushings, a cable that seized, a loose cable bracket, and a broken engine mount letting the whole engine rock and pull the cable.</p>
+</section>
+
+<section>
+  <h2>The test order</h2>
+  <div class="flow" role="img" aria-label="Test order: tests 1 to 4 in sequence, then two outcomes">
+    <div class="fstep"><strong>1 · Engine off, clutch in: try each gear</strong><span>Which direction is the stick blocked?</span></div>
+    <div class="farrow" aria-hidden="true">↓</div>
+    <div class="fstep"><strong>2 · Roll test in neutral</strong><span>Won't roll = something is stuck in gear</span></div>
+    <div class="farrow" aria-hidden="true">↓</div>
+    <div class="fstep"><strong>3 · Watch the levers on the transmission</strong><span>Helper moves the stick; do the levers move?</span></div>
+    <div class="farrow" aria-hidden="true">↓</div>
+    <div class="fstep fkey"><strong>4 · Unclip both cables, move the levers by hand</strong><span>The deciding test</span></div>
+    <div class="forks">
+      <div class="fout fgood"><span class="ok">Levers move into gears</span><strong>Transmission is fine</strong><span>5 · Cables, bushings, bracket<br>6 · Shifter base under console<br>7 · Mounts · 8 · Gear oil</span></div>
+      <div class="fout fbad"><span class="no">Levers won't move</span><strong>Problem is inside</strong><span>8 · Gear oil + magnet<br>Used transmission swap<br>7 · Mounts while it's apart</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>The tests</h2>
+  <ol class="steps">
+
+    <li>
+      <h3>Shift with the engine off</h3>
+      <p class="time">5 minutes · no tools</p>
+      <p>Engine off, key out. Push the clutch to the floor and try every gear. Then do it again with the clutch pedal up. A clutch only matters when the engine is spinning, so if the stick still won't go anywhere with the engine off, the clutch is ruled out entirely.</p>
+      <p>Pay attention to <em>which way</em> the stick is blocked. That tells you which cable or rail to suspect:</p>
+      <div class="res">
+        <span class="read">side to side OK, won't go forward/back</span><span>Columns can be selected but no gear goes in. Suspect the <strong>shift</strong> cable, or a rail stuck partway into a gear inside, which locks the others.</span>
+        <span class="read">won't move side to side</span><span>Suspect the <strong>select</strong> cable or the select side of the control shaft.</span>
+        <span class="read">locked solid every way</span><span>A cable is seized or jammed, or the transmission is caught between gears. Test 2 and test 4 decide.</span>
+        <span class="read">flops with no resistance</span><span>A cable end has come off its lever, usually a crumbled bushing. Go straight to test 5.</span>
+      </div>
+    </li>
+
+    <li>
+      <h3>Roll test</h3>
+      <p class="time">2 minutes · a helper</p>
+      <p>Flat ground. Stick in the neutral position (or as close as it goes), parking brake off, helper's foot ready on the brake. Push the car a few feet.</p>
+      <div class="res">
+        <span class="read">rolls freely</span><span class="ok">The transmission is in neutral.</span>
+        <span class="read">won't roll</span><span><span class="no">It's actually in a gear</span> even though the stick isn't. Something inside is holding a gear engaged, or the linkage is out of place. Test 4 tells which.</span>
+      </div>
+    </li>
+
+    <li>
+      <h3>Watch the levers on top of the transmission</h3>
+      <p class="time">20 minutes · 10/12 mm sockets · a helper</p>
+      <p>The transmission is on the driver's side of the engine bay. Its top is buried under the air box, the battery and the battery tray. Remove the air box (unplug the airflow sensor), then the battery and tray, to see the two cable ends. The factory manual removes these same parts to reach the cables.</p>
+      <figure>
+        <div class="shot">
+          <img src="img/real_engine_bay.jpg" alt="2006-2011 Accent engine bay with air box and battery removed" width="1280" height="720">
+          <span class="pinm" style="left:40%;top:57%">1</span>
+          <span class="pinm" style="left:64%;top:44%">2</span>
+          <span class="pinm" style="left:52%;top:85%">3</span>
+        </div>
+        <figcaption>An Accent of this generation with the air box and battery out (frame from a YouTube shifter-repair video). 1 = intake hose, left loose. 2 = the steel bracket bolted on top of the transmission; the cable ends sit below and behind it. 3 = engine. Photo labels are my reading of the frame.</figcaption>
+      </figure>
+      <figure>
+        <div class="shot">
+          <img src="img/trans_cables.png" alt="Factory figure: two shift cable ends with rubber boots on top of the transaxle" width="402" height="301">
+          <span class="pinm" style="left:33%;top:50%">1</span>
+          <span class="pinm" style="left:15%;top:62%">2</span>
+          <span class="pinm" style="left:76%;top:38%">3</span>
+          <span class="pinm" style="left:74%;top:62%">4</span>
+          <span class="pinm" style="left:52%;top:48%">5</span>
+        </div>
+        <figcaption>Factory figure, 2010 Accent M5CF1 (charm.li). A points to the two cable ends.</figcaption>
+      </figure>
+      <ol class="legend">
+        <li><strong>Cable end 1</strong>, with its accordion rubber boot.</li>
+        <li>Its <strong>snap pin</strong> (a bent spring clip through the pin) holding it on <strong>lever 1</strong>.</li>
+        <li><strong>Cable end 2</strong>, also with a boot.</li>
+        <li>Where it pins onto <strong>lever 2</strong>.</li>
+        <li>The <strong>cable bracket</strong> bolted to the case, which holds the cable housings still.</li>
+      </ol>
+      <p class="sub">The factory manual doesn't say which lever is select and which is shift. Test 4 shows you: the select lever moves when the stick goes side to side.</p>
+      <figure>
+        <div class="shot">
+          <img src="img/real_cable_boot.jpg" alt="Real Accent cable end with grey spring boot among hoses" width="1280" height="720">
+          <span class="pinm" style="left:55%;top:52%">1</span>
+        </div>
+        <figcaption>What it looks like in a real car. 1 = a cable end's grey spring boot, partly behind the wiring loom (YouTube frame, MC-generation Accent).</figcaption>
+      </figure>
+      <p>Have the helper move the stick while you watch both levers.</p>
+      <div class="res">
+        <span class="read">a cable moves, its lever doesn't</span><span><span class="no">That cable end is slipping or off.</span> Test 5.</span>
+        <span class="read">a cable housing moves too</span><span><span class="no">The bracket or a cable anchor is loose.</span> Test 5.</span>
+        <span class="read">nothing moves at all</span><span>Either the cable or the transmission is jammed. Test 4.</span>
+      </div>
+    </li>
+
+    <li>
+      <h3>Unclip both cables and move the levers by hand</h3>
+      <p class="time">15 minutes · pliers, paint pen or phone camera</p>
+      <p><strong>First, mark the levers.</strong> Take a photo and draw a paint-pen line from each lever onto the case. One Accent owner on the Hyundai forum unclipped these to change a starter and lost reverse because a lever moved. Then pull the two snap pins and lift both cable ends off their levers.</p>
+      <figure>
+        <div class="shot">
+          <img src="img/trans_cables_off.png" alt="Factory figure: cable ends lifted off the two transaxle levers" width="402" height="301">
+          <span class="pinm" style="left:30%;top:47%">1</span>
+          <span class="pinm" style="left:40%;top:84%">2</span>
+          <span class="pinm" style="left:68%;top:38%">3</span>
+          <span class="pinm" style="left:60%;top:76%">4</span>
+        </div>
+        <figcaption>Factory figure: both cable ends (1, 3) lifted off; the levers (2, 4) are free. This is the position for the test.</figcaption>
+      </figure>
+      <p>Now move each lever by hand. One lever picks the column, the other pushes the gear in. Work them together: pick a column, then push the gear lever each way. A gear is in when the car won't roll (helper tries pushing, clutch pedal up).</p>
+      <div class="res">
+        <span class="read">levers move, gears engage</span><span><span class="ok">The transmission's shifting works.</span> The fault is outside: cables, bushings, bracket or shifter. Tests 5–7. Cheap.</span>
+        <span class="read">levers move, no gear ever engages</span><span><span class="no">Inside fault.</span> A broken fork or rail, or the control shaft has let go of the rails.</span>
+        <span class="read">levers won't move, or barely</span><span><span class="no">Inside fault.</span> A rail stuck partway into a gear, a bent fork, or broken parts jammed in the case. Test 8, then the swap plan.</span>
+      </div>
+      <p class="sub">Don't force the levers with a long bar. If they don't move with firm hand pressure, that is the answer.</p>
+    </li>
+
+    <li>
+      <h3>Check the cables, bushings and bracket</h3>
+      <p class="time">15 minutes</p>
+      <p>With both ends still off:</p>
+      <ul class="plain">
+        <li><strong>Push and pull each cable</strong> by its end. It should slide smoothly with two fingers. A stiff or crunchy cable is seized inside its housing, and the fix is a new cable. In one YouTube video, one cable felt fine and the other took real effort to move, and that stiff cable was the whole fault.</li>
+        <li><strong>Look inside each cable-end eye</strong>. A rubber or plastic bushing should fill the hole snugly. Cracked, missing, or an eye that wobbles on the pin means replace the bushings.</li>
+        <li><strong>Check the cable bracket</strong>. Grab each cable housing where it clips into the bracket and try to move it. It shouldn't shift at all. Snug every bolt on the plate. The factory torque for the cable-bracket bolts is <span class="read">20–27 N·m (15–20 lb-ft)</span>.</li>
+      </ul>
+      <figure>
+        <div class="shot">
+          <img src="img/cable_bracket.png" alt="Factory figure: shift cable bracket bolted to top of transaxle" width="402" height="304">
+          <span class="pinm" style="left:56%;top:28%">1</span>
+          <span class="pinm" style="left:30%;top:42%">2</span>
+          <span class="pinm" style="left:53%;top:45%">3</span>
+          <span class="pinm" style="left:52%;top:76%">4</span>
+        </div>
+        <figcaption>Factory figure. 1 = cable bracket ("A"). 2 = a cable-housing notch. 3 = the bracket's bolts. 4 = the transmission mount bracket below it (see test 7).</figcaption>
+      </figure>
+    </li>
+
+    <li>
+      <h3>Check the shifter base under the console</h3>
+      <p class="time">30–45 minutes · Phillips, 10/12 mm</p>
+      <p>Only needed if tests 4 and 5 point outside and the cables look fine at the transmission end. Remove the center console (cup holder and parking-brake cover, side covers, then a front and a rear bolt). The two cables clip onto the bottom of the stick: the select cable with a snap pin, and the shift cable with a U-clip.</p>
+      <div class="pair">
+        <figure>
+          <div class="shot">
+            <img src="img/shifter_adjuster.jpg" alt="Factory figure: shift lever base with cables and select cable adjuster" width="402" height="301">
+            <span class="pinm" style="left:52%;top:32%">A</span>
+            <span class="pinm" style="left:68%;top:22%">1</span>
+            <span class="pinm" style="left:14%;top:52%">2</span>
+          </div>
+          <figcaption>Factory figure. A = the select-cable adjuster. 1 = gear stick. 2 = the two cables entering from the firewall.</figcaption>
+        </figure>
+        <figure>
+          <div class="shot">
+            <img src="img/real_shifter_base.jpg" alt="Real 2009 Accent shifter base with two cable ends" width="1280" height="720">
+            <span class="pinm" style="left:76%;top:16%">1</span>
+            <span class="pinm" style="left:80%;top:52%">2</span>
+            <span class="pinm" style="left:30%;top:63%">3</span>
+            <span class="pinm" style="left:46%;top:83%">4</span>
+          </div>
+          <figcaption>A 2009 Accent, console out (YouTube frame). 1, 2 = where each cable housing clips into the base. 3 = grey adjuster with a white locking collar, on the lower cable. 4 = a mounting bushing.</figcaption>
+        </figure>
+      </div>
+      <p>Look for a missing snap pin or clip, a cable end that's popped off its pin, a cracked plastic base, and an adjuster collar that has slipped. A forum owner with a new cable had the plastic adjuster collar slip out going into 5th/reverse.</p>
+      <p><strong>Putting the shifter back:</strong> fit the cables with both the stick and the transmission levers in neutral, then bolt the shift lever assembly down to <span class="read">9–14 N·m (6–9.5 lb-ft)</span> and set the select-cable adjuster with the stick in N before the console goes back on (<a href="https://lemon-manuals.la/Hyundai/2010/Accent%20L4-1.6L/Repair%20and%20Diagnosis/Transmission%20and%20Drivetrain/Manual%20Transmission%2FTransaxle/Shifter%20M%2FT/Service%20and%20Repair/Removal%20and%20Replacement/Repair%20procedures%20%28M5CF1%29/">factory procedure</a>).</p>
+      <p><strong>Hyundai's adjustment procedure</strong> comes from service bulletin <code>06-40-011</code>, "Manual Transaxle Shift Lever Cable Adjustment", found in Chilton Library through the library card. It was written for the 2006 Accent; the 2010 uses the same cable and adjuster, so it should apply, but that's my inference. With the console off:</p>
+      <div class="pair">
+        <figure>
+          <div class="shot"><img src="img/tsb_adjust.png" alt="Hyundai TSB 06-40-011 photos: locking tab K, cable L, adjuster M, tab N" width="304" height="668"></div>
+          <figcaption>From the bulletin. K = locking tab, L = the cable, M = the adjuster, N = the tab pushed to lock it.</figcaption>
+        </figure>
+        <ol class="legend">
+          <li>Slide the adjuster's white cover rearward.</li>
+          <li>Push locking tab <strong>K</strong> down with a small flat screwdriver. That frees cable <strong>L</strong> to slide in the adjuster.</li>
+          <li>Move the gear stick fully to the <strong>right</strong>. That pulls adjuster <strong>M</strong> forward to its set point.</li>
+          <li>Push tab <strong>N</strong> to lock it.</li>
+          <li>Check that the stick moves left and right <strong>evenly</strong> in neutral. If not, repeat steps 2–4.</li>
+          <li>Slide the white cover back. Hyundai's labor allowance: <span class="read">0.4 h</span>.</li>
+        </ol>
+      </div>
+      <p class="sub">The adjuster sits on the select cable per the factory manual, so in photo 2 the lower cable is probably the select cable. That's my reading, not labeled in the source.</p>
+    </li>
+
+    <li>
+      <h3>Check the engine and transmission mounts</h3>
+      <p class="time">20 minutes · pry bar, flashlight, a helper</p>
+      <p>Four rubber mounts hold the engine and transmission. If one tears, the whole engine rocks under load, which can pull a gear out and stretch the cables. That is one of the classic "pops out of gear" causes. Inspect each one for torn rubber and gaps. Then, with the hood up and the shifting fixed, have a helper hold the brake, put it in 1st, and ease the clutch out slightly while you watch from the side. The engine should only twitch.</p>
+      <div class="pair">
+        <figure>
+          <div class="shot"><img src="img/mounts.jpg" alt="Factory figure: Accent engine and transaxle mount layout on subframe with torque" width="1050" height="1045"></div>
+          <figcaption>Factory figure, top view, front of car at the top. 1 = right (passenger) engine mount. 3 = left transmission mount. 4 = front roll stopper. 5 = rear roll stopper. 6 = subframe. Torques in N·m.</figcaption>
+        </figure>
+        <figure>
+          <div class="shot">
+            <img src="img/real_engine_mount.jpg" alt="Right engine mount on a 2009 Accent seen from above" width="1280" height="720">
+            <span class="pinm" style="left:57%;top:50%">1</span>
+            <span class="pinm" style="left:50%;top:24%">2</span>
+          </div>
+          <figcaption>Right engine mount on a 2009 Accent, top bracket removed (YouTube frame). 1 = the mount's rubber body and center stud. 2 = the engine-side bracket studs.</figcaption>
+        </figure>
+      </div>
+      <p class="sub">Mount bolts, factory: main through-bolts on the engine and transmission mounts <span class="read">68.6–93.2 N·m</span>; bracket and roll-stopper bolts <span class="read">49–63.7 N·m</span> (that one is from Hyundai service bulletin 09-SS-005).</p>
+    </li>
+
+    <li>
+      <h3>Check the gear oil and the drain plug magnet</h3>
+      <p class="time">20 minutes · 17 mm or 19/24 mm (videos disagree) · drain pan · jack stands</p>
+      <p>Low oil is the main thing that kills these transmissions, and the drain plug's magnet shows how much metal is loose inside. Pull the <strong>fill plug</strong> first (if the fill plug won't come out, you don't want the drain plug out). Oil should be right at the bottom edge of the hole.</p>
+      <div class="pair">
+        <figure>
+          <div class="shot"><img src="img/fill_plug.png" alt="Factory figure: M5CF1 fill plug location" width="402" height="301"></div>
+          <figcaption>Fill plug "A", on the side of the case at the oil level. Factory figure.</figcaption>
+        </figure>
+        <figure>
+          <div class="shot"><img src="img/drain_plug.png" alt="Factory figure: M5CF1 drain plug location" width="402" height="301"></div>
+          <figcaption>Drain plug "A", at the bottom of the case near the clutch housing. Factory figure.</figcaption>
+        </figure>
+      </div>
+      <div class="res">
+        <span class="read">full, clean, fine paste on magnet</span><span class="ok">Normal wear.</span>
+        <span class="read">low or empty</span><span class="mid">Find the leak. Low oil can make the rails bind.</span>
+        <span class="read">chunks, slivers, tooth pieces</span><span class="no">Something broke inside. Plan the swap.</span>
+      </div>
+      <p class="sub">Spec: <span class="read">SAE 75W/85 API GL-4, 1.9 L (2.0 qt)</span>. Plugs <span class="read">60–80 N·m</span> with new washers. Avoid GL-5 gear oil; it's meant for differentials and is rough on brass synchronizers.</p>
+    </li>
+  </ol>
+</section>
+
+<section>
+  <h2>If it's inside the transmission</h2>
+  <p>Rebuilding an M5CF1 is a specialty job: the factory overhaul time is <span class="read">12.2 h</span>, and US rebuild kits for this exact gearbox are hard to find. A used unit is the normal fix. The factory time to swap one is <span class="read">4.9 h</span>. The subframe has to come down, and the engine is held from above with a support bar (Hyundai tool 09200-38001, or a rented engine support bar).</p>
+  <figure>
+    <div class="shot"><img src="img/internals.jpg" alt="Factory exploded view of M5CF1 internals: control shaft, rails, forks" width="1050" height="1015"></div>
+    <figcaption>Factory exploded view. 1 = control shaft (bolts on top of the case; the cable levers are its outside arms). 4 = 5th fork, 5 = 5th rail, 6 = reverse lug. 8 = 3rd/4th rail, 9 = 3rd/4th fork. 10 = 1st/2nd rail, 11 = 1st/2nd fork.</figcaption>
+  </figure>
+  <p><strong>One in-car look that may be possible:</strong> on the Rio and Accent models before and after this one, Hyundai's manual unbolts the control shaft (part 1) from the top of the case with the transmission in the car, then reinstalls it in neutral with sealant. If the MC works the same way, you can look at the shift finger and the top of the rails without pulling the transmission. That's a hypothesis: the 2010 manual doesn't describe it. The factory torque for those bolts is listed as both <span class="read">20–27</span> and <span class="read">30–35 N·m</span> in different places.</p>
+  <div class="callout">
+    <strong>Buying a used transmission</strong>
+    <ul class="plain">
+      <li><strong>Read the build date</strong> on the driver's door-jamb sticker. Hyundai's 2010 Accent transmissions are <code>43000-23017</code> (built 11/2006–01/2010) and <code>43000-32818</code> (built 06/2010–01/2011).</li>
+      <li><strong>Check the trim.</strong> car-part.com files the "Blue" trim's manual in its own interchange group, separate from GS/GLS/SE. Blue units are cheap, but buy from the group that matches the car.</li>
+      <li><strong>Kia Rio units:</strong> same gearbox family, but car-part.com's interchange lists Rio transmissions only for Rios. Only buy one if the seller guarantees Accent fit.</li>
+      <li>Ask for mileage, a test note ("run and drive"), and the warranty term. Shipped units come drained.</li>
+    </ul>
+  </div>
+  <div class="callout goodc">
+    <strong>Four likely manual donors are in Salt Lake right now</strong>
+    <p>NHTSA's VIN decoder reads these as <span class="read">Manual/Standard</span> (rechecked Oct 28):</p>
+    <ul class="plain">
+      <li><strong>Tear-A-Part SLC</strong> (652 S Redwood Rd, transmission <span class="read">$199.49 + $24.99 core</span>):<br>2008 Accent hatchback, <strong>row 68</strong>, VIN <code>KMHCM36C98U092455</code><br>2008 Accent sedan, <strong>row 24</strong>, VIN <code>KMHCN46C68U231265</code><br>2008 Kia Rio, <strong>row 65</strong>, VIN <code>KNADE123286375314</code></li>
+      <li><strong>Pick-n-Pull SLC</strong> (585 W 3300 S, <span class="read">$254.99 + $29.99 core</span>):<br>2008 Accent hatchback, <strong>row 35</strong>, VIN <code>KMHCM36C78U074939</code></li>
+    </ul>
+    <p>A VIN decode goes by trim codes, so look at the pedals before pulling anything. A 2008 transmission should match a 2010 built before February 2010 (Hyundai's <code>43000-23017</code> covers 11/2006–01/2010); check the owner's door-jamb build date first. The Rio has the same gearbox and ratios, but its brackets may not bolt on, so it's the fallback (see <a href="#appendix-findings">D9</a>). The other Accents on these lots don't say which transmission they have. Cars get picked over, so call first.</p>
+    <p>A yard watch (<code>carkit yard watch</code>) can send a message when another 2006–2011 Accent or Rio arrives.</p>
+  </div>
+  <h3>Donor cars on Utah lots (checked Oct 28)</h3>
+  <p class="sub">2006–2011 Accents and Rios with the same transmission. None of these yards list the transmission type; "manual per VIN" means NHTSA's decoder reads the car's VIN as a 5-speed manual. Pull N Save blocks automated checks, so its row is from a hand check on Oct 27.</p>
+  <div class="scroll">
+  <table class="stack">
+    <thead><tr><th>Yard</th><th>Cars</th><th>Manual trans price</th></tr></thead>
+    <tbody>
+      <tr><td>Pick-n-Pull, 585 W 3300 S, SLC · 801-264-0359</td><td>2010 Accent (row 35) · <strong>2008 Accent, manual per VIN (row 35)</strong> · 2007 Accent (row 45) · 2006 Rio5 (row 33)</td><td class="num">$254.99 + $29.99 core</td></tr>
+      <tr><td>Pull N Save, 6980 W 2100 S, West Valley · 801-508-1002</td><td>Oct 27: 2011 Accent (row 21) · 2008 Accent (18) · 2007 Accent (17) · 2008 Rio (21)</td><td class="num">$135.19 + $20 core</td></tr>
+      <tr><td>Tear-A-Part, 652 S Redwood Rd, SLC · 801-886-2345</td><td>2011 Accent (row 49) · <strong>2008 Accents, manual per VIN (rows 24, 68)</strong> · <strong>2008 Rio, manual per VIN (row 65)</strong></td><td class="num">$199.49 + $24.99 core</td></tr>
+      <tr><td>Utah Pic-A-Part, 255 S Geneva Rd, Orem · 801-756-5878</td><td>2010 Accent (row 209, set Oct 18) · 2008 and 2006 Rio5</td><td class="num">call (Ogden list: $182.35 + $25)</td></tr>
+      <tr><td>Utah Pic-A-Part, 555 W 17th St, Ogden · 801-612-6446</td><td>2011 Accent (row 228) · 2007 and 2006 Rio</td><td class="num">$182.35 + $25 core</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="sub">Self-pull shift cables run <span class="read">$10.45–$34.99</span> and mounts <span class="read">$10.45–$21.99</span> at the same yards. car-part.com showed no used manual shift cables anywhere in Utah.</p>
+  <div class="callout">
+    <strong>Do while it's out</strong>
+    <p>The clutch, flywheel and release bearing come out with the transmission anyway, so the extra cost is parts only. A clutch kit is <span class="read">$80–$145</span>. Also replace the axle seals and input seal (<span class="read">$3–$9</span> each), new cable-end bushings, any torn mount, and fresh gear oil.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Videos worth watching</h2>
+  <p class="sub">Picked from YouTube, with timestamps. Several have no narration; frames below were checked by eye.</p>
+  <figure>
+    <div class="shot">
+      <img src="img/yt_cable_ends.jpg" alt="Top of a 2011 Rio transaxle with the two shift cable boots and a cable end bushing" width="1000" height="563">
+      <span class="pinm" style="left:29%;top:24%">1</span>
+      <span class="pinm" style="left:51%;top:26%">2</span>
+      <span class="pinm" style="left:49%;top:62%">3</span>
+      <span class="pinm" style="left:59%;top:58%">4</span>
+      <span class="pinm" style="left:44%;top:10%">5</span>
+    </div>
+    <figcaption>Tests 3–5 on a real car (2011 Rio, same transmission). 1, 2 = the two cable boots. 3 = a cable-end bushing pulled off its lever. 4 = the lever's stud it pops onto. 5 = the cable bracket. <a href="https://www.youtube.com/watch?v=tqz_ur3tLe4&amp;t=290s">R4UL TV, 4:50</a></figcaption>
+  </figure>
+  <div class="pair">
+    <figure>
+      <div class="shot">
+        <img src="img/yt_forks_rails.jpg" alt="Hyundai training video: shift rails and forks in the transaxle case" width="1000" height="667">
+        <span class="pinm" style="left:56%;top:24%">1</span>
+        <span class="pinm" style="left:52%;top:43%">2</span>
+        <span class="pinm" style="left:70%;top:30%">3</span>
+        <span class="pinm" style="left:56%;top:66%">4</span>
+        <span class="pinm" style="left:51%;top:82%">5</span>
+      </div>
+      <figcaption>Inside, from Hyundai's own training video (an earlier Accent gearbox with the same layout). 1 = shift rails. 2, 3 = forks. 4 = the control finger the cables turn. 5 = the control shaft's rubber boot, under the cable levers. <a href="https://www.youtube.com/watch?v=9GjP2tMLVbQ&amp;t=510s">HMA training, 8:30</a></figcaption>
+    </figure>
+    <figure>
+      <div class="shot">
+        <img src="img/yt_detent_plugs.jpg" alt="Accent/Rio transaxle case with detent plugs, one removed" width="1000" height="563">
+        <span class="pinm" style="left:18%;top:32%">1</span>
+        <span class="pinm" style="left:32%;top:33%">2</span>
+        <span class="pinm" style="left:53%;top:22%">3</span>
+      </div>
+      <figcaption>An Accent/Rio case. 1, 2 = plugs over the detent springs and balls that hold each gear in. 3 = an empty bore with its plug out. The narrator warns that the springs can differ in length, so keep them in order. <a href="https://www.youtube.com/watch?v=e6_64p31vIk&amp;t=67s">Accent/Rio repair, 1:07</a> (Russian narration)</figcaption>
+    </figure>
+  </div>
+  <ul class="plain">
+    <li><strong>Transmission and clutch out on a 2007 Accent</strong> (no narration): the engine is held with a strap from above and, with the subframe left in, the transmission is slid aside far enough to swap the clutch. The narrator says at 23:05 it can't come fully out that way; the factory procedure removes the subframe. <a href="https://www.youtube.com/watch?v=UdZ5f8Ut4Os&amp;t=1062s">SprocketHead, 17:42</a>. Its on-screen note at 33:20: a failed release bearing can over-extend the slave cylinder and blow its seals.</li>
+    <li><strong>Full Hyundai training teardown</strong>: rails, forks, control shaft and the reverse lockout, with an interlock test at 19:39. <a href="https://www.youtube.com/watch?v=-yfICJKkLhE">disassembly</a> · <a href="https://www.youtube.com/watch?v=9GjP2tMLVbQ">assembly</a></li>
+    <li><strong>Shifter base under the console, 2009 Accent</strong>: both cable ends and their bushings at 7:00. <a href="https://www.youtube.com/watch?v=bLimbYr62kk&amp;t=420s">dodz oto vlog</a></li>
+    <li><strong>Gear oil change</strong>: a 2006–2011 Accent video calls the plugs 17 mm; a 2008 Rio video says 24 mm drain and 19 mm fill. They disagree, so check before buying a socket. <a href="https://www.youtube.com/watch?v=j5a4eqIad4o">Accent</a> · <a href="https://www.youtube.com/watch?v=JUoSwtmfQu4">Rio</a></li>
+  </ul>
+</section>
+
+<section>
+  <h2>Parts and prices</h2>
+  <p class="sub">Seen online on Oct 27, 2026, before shipping and tax. Yard stock and prices change daily.</p>
+  <div class="scroll">
+  <table class="stack">
+    <thead><tr><th>Part</th><th>Pick</th><th>Price</th><th>Where</th></tr></thead>
+    <tbody>
+      <tr><td>Cable-end bushings</td><td>Torque Solution TS-SCB-210 (fits 2000–2011 Accent)</td><td class="num">$24.99–$29.99</td><td><a href="https://www.maperformance.com/products/torque-solution-shifter-bushings-2000-2011-hyundai-accent-ts-scb-210">MAPerformance</a>, <a href="https://www.torquesolution.com/Hyundai-Accent-Shifter-Bushings-p/ts-scb-210.htm">Torque Solution</a></td></tr>
+      <tr><td>Shift/select cable pair</td><td>Pioneer CA8124 (crosses to 43794-1G100)</td><td class="num">$97.79</td><td><a href="https://www.rockauto.com/en/catalog/hyundai,2010,accent,1.6l+l4,1444682,transmission-manual,shift+cable,8245">RockAuto</a></td></tr>
+      <tr><td>Shift/select cable pair, OEM</td><td>Hyundai 43794-1G300 · 43794-1E150 (match by VIN)</td><td class="num">$119.20 · $149.14</td><td><a href="https://www.hyundaipartsdeal.com/oem-2010-hyundai-accent-shift_cable.html">HyundaiPartsDeal</a></td></tr>
+      <tr><td>Mounts, all four</td><td>Cheapest mix (SKP/DEA) · DEA set · Anchor set</td><td class="num">$130 · $158 · $228</td><td><a href="https://www.rockauto.com/en/catalog/hyundai,2010,accent,1.6l+l4,1444682,engine,motor+mount,5552">RockAuto</a></td></tr>
+      <tr><td>Used transmission, self-pull</td><td>Tear-A-Part SLC · Pick-n-Pull SLC (fixed prices, any manual)</td><td class="num">$199.49 + $24.99 core · $254.99 + $29.99 core</td><td><a href="https://tearapart.com/partspricelist.php">Tear-A-Part</a> · <a href="https://www.picknpull.com/part-pricing/74">Pick-n-Pull</a> · four manual donors on these lots Oct 28 (see the donor list)</td></tr>
+      <tr><td>Used transmission, Utah yards</td><td>Country Auto Salvage, Aurora (listed "Blue") · Auto Moto, Cedar City</td><td class="num">$350 · $375</td><td><a href="https://www.car-part.com/">car-part.com</a></td></tr>
+      <tr><td>Used transmission, 2010 match</td><td>A-1 Auto Recyclers MO, 62k mi · K&amp;M CA, 78k mi</td><td class="num">$465 · $450 + freight</td><td>car-part.com; freight about $150–$300</td></tr>
+      <tr><td>Reman transmission</td><td>Proven Force, MN (core charge not listed)</td><td class="num">$847</td><td>car-part.com</td></tr>
+      <tr><td>Clutch kit</td><td>Exedy HYK1012 · LuK 05172 · Sachs K7030401</td><td class="num">$79.79 · $118.79 · $144.79</td><td><a href="https://www.rockauto.com/en/catalog/hyundai,2010,accent,1.6l+l4,1444682,transmission-manual">RockAuto</a></td></tr>
+      <tr><td>Flywheel</td><td>LuK LFW456</td><td class="num">$67.79</td><td>RockAuto</td></tr>
+      <tr><td>Gear oil</td><td>Any 75W-85 GL-4 MTF, 2 qt (Hyundai 04300-00110 is 1 L)</td><td class="num">~$12–$30/qt</td><td>estimate; not priced today</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <h3>Total cost by outcome</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Outcome</th><th>DIY</th><th>Shop</th></tr></thead>
+    <tbody>
+      <tr><td>Bushings only</td><td class="num">$30–$45</td><td class="num">$80–$200</td></tr>
+      <tr><td>New cable pair</td><td class="num">$100–$145</td><td class="num">$265–$550</td></tr>
+      <tr><td>Mounts</td><td class="num">$130–$230</td><td class="num">$350–$710</td></tr>
+      <tr><td>Used transmission</td><td class="num">$180–$600</td><td class="num">$900–$1,650</td></tr>
+      <tr><td>Used transmission + new clutch</td><td class="num">$300–$900</td><td class="num">add ~$80–$250 parts</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="sub">Shop figures are estimates built from factory labor times (cable job 4.0 h, transmission swap 4.9 h) at $110–$160/h, cross-checked against RepairPal's clutch-job labor of $692–$1,015. No Utah shop was called.</p>
+</section>
+
+
+
+<section id="appendix-common">
+  <h2>Appendix A · Is this common, and what did others do?</h2>
+  <div class="callout">
+    <strong>Short answer: uncommon, and not a known weak point</strong>
+    <p>On 2006–2011 Accents, Rios and Souls (all the same gearbox family), not being able to get into gear and popping out of gear are both rare in the records. There's no recall and no Hyundai bulletin for either. When "won't go into gear" does happen, the best-documented cause is <strong>a shift-cable end or linkage that came apart</strong>. That's my judgment from the numbers below.</p>
+  </div>
+
+  <h3>The numbers</h3>
+  <div class="scroll">
+  <table class="stack">
+    <thead><tr><th>Measure</th><th>Count</th><th>What it means</th></tr></thead>
+    <tbody>
+      <tr><td>Federal (NHTSA) complaints, manual can't-shift, Accent + Rio + Soul</td><td class="num">5 of 1,047 (0.5%)</td><td>2 Accent, 1 Rio, 2 Soul</td></tr>
+      <tr><td>Federal complaints, manual popped out of gear, Accent + Rio</td><td class="num">3 of 718 (0.4%)</td><td>The dealer couldn't reproduce any of the three</td></tr>
+      <tr><td>A problem owners do call common: the Accent's air-bag light</td><td class="num">143 of 458 (31%)</td><td>For scale: about 70× more complaints</td></tr>
+      <tr><td>Forum threads where a gear won't go in, the stick is stuck, or a gear is lost</td><td class="num">~21 threads over ~15 years</td><td>Accent 9, Rio 8, Soul 5</td></tr>
+      <tr><td>Threads where the poster says what fixed it</td><td class="num">4 of 21</td><td>Most never post an ending</td></tr>
+      <tr><td>Aftermarket demand: Accent shift-bushing kit</td><td class="num">1 Amazon review</td><td>Not a big-seller wear part</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="sub">Complaints undercount gearbox faults, because people file safety complaints for air bags and engines more often. Manual cars are also a minority of these models. Even allowing for both, the order of magnitude says rare.</p>
+
+  <h3>What fixed it, when owners said</h3>
+  <ol class="legend">
+    <li><strong>Cable or linkage end</strong>: 2 firm fixes and 2 partial. It usually shows as a sudden loss of reverse, 1st or 5th, or a stick with no feel. Example: a 2008 Accent at 170k miles lost reverse, 1st and 5th; "the linkage had come apart."</li>
+    <li><strong>Clutch hydraulics</strong>: 1 firm fix. A 2009 Accent went into gear with the engine off but not running; a new master, slave and line fixed it. That doesn't match the owner's car, which won't go in even with the engine off.</li>
+    <li><strong>Shifter lower skirt</strong>: 1 firm fix, on the 2010 Soul only (Kia bulletin about entering 1st at a stop).</li>
+    <li><strong>Inside the gearbox</strong> (fork, detent spring, synchro): no poster-stated fix. These threads ended with a mechanic's guess or a replacement gearbox. A 2000 Accent (an older gearbox) had new cable bushings that didn't help, then got a used transmission.</li>
+  </ol>
+
+  <h3>Which causes fit the owner's car</h3>
+  <p>The key fact: <strong>it won't go into gear even with the engine off</strong>. That rules out the clutch, since a clutch matters only while the engine spins. It leaves the cable ends, the shifter base, or the inside of the gearbox. Two causes explain both halves of the symptom, popping out and then no gear:</p>
+  <ul class="plain">
+    <li><strong>A cable end that let go</strong> (cheap, test 3–5). A slipping cable can drag the lever toward neutral under load, and once off, nothing engages. One forum owner watched the stick push itself out of 4th as the bushings wore.</li>
+    <li><strong>A broken fork, rail or detent inside</strong> (expensive, Appendix C). This is the factory table's classic pop-out cause; if a rail jams partway, the interlock locks the others.</li>
+  </ul>
+  <p>A bad engine mount can cause the pop-out but wouldn't leave every gear dead afterward. Test 4 separates the two remaining causes.</p>
+
+  <h3>Reports most like the owner's</h3>
+  <ul class="plain">
+    <li><strong>2009 Accent, 107k:</strong> popped out of 5th, then 4th, then "will not go into or out of any gear, shift is stuck." No resolution posted. <a href="https://www.startmycar.com/ca/hyundai/accent/problems/6708/jumping-out-fifth-gear-now-will-not-go-in-or-out-of-any-gear">StartMyCar</a></li>
+    <li><strong>2009 Accent, 49k:</strong> popped out of 4th and 5th on the highway, got worse until it wouldn't hold 5th. Two dealers couldn't reproduce it. (NHTSA 10420100, CarTalk)</li>
+    <li><strong>2011 Accent:</strong> stuck in 4th, the stick had "no back pressure," cables attached and moving. The owner suspected the inside of the gearbox; unresolved.</li>
+    <li><strong>2008 Accent, 170k:</strong> lost reverse, 1st and 5th; the linkage had come apart. Fixed by reconnecting it.</li>
+    <li><strong>2007 Accent hatchbacks:</strong> a broken cable or cable end; one replacement cable end kept slipping until glued.</li>
+  </ul>
+  <p class="sub">Searched: about 15 forum and Q&amp;A sites, NHTSA's complaint database read report by report, CarComplaints, RepairPal and TrueDelta. Reddit couldn't be searched; its archive was down all evening. Full tables with links: <code>owner_reports.md</code>, <code>prevalence.md</code>, <code>cant_shift.md</code>.</p>
+</section>
+
+
+<section id="appendix-rr">
+  <h2>Appendix B · Pulling the transmission and replacing the clutch</h2>
+  <p>The clutch sits between the engine and the transmission, so the two jobs go together: the transmission has to move away from the engine before the clutch can be reached. Every torque below is Hyundai's factory value (charm.li service manual, or Hyundai bulletin 09-SS-005 in Chilton) unless marked otherwise. Full write-up with a source for every number: <code>rr_clutch.md</code> in the research folder.</p>
+
+  <div class="callout">
+    <strong>Two ways to do it</strong>
+    <p><strong>A. Factory: subframe out.</strong> The whole front subframe (the steel cradle that holds the lower arms, steering rack and engine mounts) comes out, and the transmission drops straight down. Hyundai's bulletin 09-SS-005 lists it as 42 photographed steps. It's built for a lift and heavy work on jack stands, and it disturbs the steering.</p>
+    <p><strong>B. Subframe stays.</strong> Unbolt the transmission and slide it toward the driver's wheel well far enough to swap the clutch. A forum owner did this on this exact gearbox, and a 2007 Accent video shows it. The transmission can't come fully out this way; the video's narrator says so at 23:05. One forum poster did get a transmission out by removing the clutch first for room, then swinging the transmission out.</p>
+    <p>My judgment: <strong>route B for a clutch-only job</strong>, since there's no subframe, steering joint or power-steering hose to deal with. <strong>Route A when the transmission must leave the car</strong> (a used-unit swap or a rebuild), unless the clutch-first trick works.</p>
+  </div>
+
+  <h3>Tools and supplies</h3>
+  <ul class="plain">
+    <li>Jack stands (four is safer), floor jack, wheel chocks. Lift points are the rocker seams behind the front wheels and ahead of the rear wheels (figure below).</li>
+    <li><strong>Engine support bar</strong> across the fender lips, hooked to the engine (Hyundai tool 09200-38001), plus a second jack with a wood block under the oil pan as backup. Often a free loaner at AutoZone and O'Reilly; call first.</li>
+    <li>Transmission jack, or a floor jack with a cradle and a ratchet strap.</li>
+    <li>Clutch alignment tool (usually in the clutch kit), ball-joint/tie-rod separator, pry bars, torque wrench (10–100 N·m) plus a breaker bar for the 200–260 N·m axle nut.</li>
+    <li>Sockets 10, 12, 14, 17, 19 mm, plus 24 mm for the drain plug (sizes come from videos and disagree; test-fit). Universal joint and long extensions for the buried starter and cable-bracket bolts.</li>
+    <li>Parts: clutch kit (disc 215 × 145 mm, pressure plate, release bearing), two new axle circlips, two axle seals, cotter pins, 2 qt of 75W-85 GL-4 gear oil, moly grease (Hyundai CASMOLY L9508 or equal), DOT 3/4 brake fluid. Optional: slave cylinder ($12–$39) and flywheel resurface ($40–$100) or new ($68).</li>
+  </ul>
+  <div class="pair">
+    <figure><div class="shot"><img src="img/app_lift_points.png" alt="Factory lift and jack-stand points under the rocker panels" width="1000" height="664"></div><figcaption>Factory lift and jack-stand points: the reinforced rocker seams. (charm.li)</figcaption></figure>
+    <figure><div class="shot"><img src="img/app_engine_support.jpg" alt="Engine support fixture 09200-38001 spanning the engine bay" width="402" height="303"></div><figcaption>The engine support bar holds the engine from above while the mounts are off. (charm.li)</figcaption></figure>
+  </div>
+
+  <h3>Removal (both routes start the same)</h3>
+  <ol class="legend">
+    <li><strong>Battery out</strong>, negative first. Mark every connector and hose with tape.</li>
+    <li><strong>Air box, intake hose, battery tray.</strong> Unplug the airflow sensor and the engine-computer connectors on the air box. Rio video: 10 mm air-box bolts, 12 mm tray bolts.</li>
+    <li><strong>Ground cable</strong> (one is on a bellhousing bolt), speed sensor and back-up light connectors.</li>
+    <li><strong>Clutch tube brackets</strong>, then unbolt the <strong>slave cylinder</strong> and hang it with its hose still connected, so no bleeding is needed later.</li>
+    <li><strong>Shift cables:</strong> snap pins off both ends, then the cable bracket (count the bolts: the manual says 2, some sources say 3). Bag the rubber grommets.</li>
+    <li><strong>Starter</strong> (2 bolts). Hang it by a strap, cable attached.</li>
+    <li><strong>Front wheels off, under covers off. Drain the gear oil now</strong>, before the axles come out, or it pours out of the axle holes.</li>
+    <li><strong>Axles:</strong> loosen the axle nut (helper on the brake), free the knuckle (tie-rod end, ball joint or strut bolts), pry each axle's inner end out of the case without digging into the seal. Throw away the circlips.</li>
+    <li><strong>Engine support bar on</strong>, taking a little weight. Route B keeps the right engine mount connected.</li>
+    <li><strong>Mounts:</strong> left transmission mount bracket, then rear and front roll stoppers (route B: unbolt them from the transmission).</li>
+    <li><strong>Bellhousing bolts</strong>: about seven, two big ones on top. Paint-mark each bolt's hole; they differ in length.</li>
+    <li><strong>Route B:</strong> pull the transmission straight off the input shaft toward the wheel well (never let it hang on the shaft) and rest it on the subframe. <strong>Route A:</strong> steering joint (mark it first), power-steering return hose, tie rods, lower arms, sway-bar links, roll stoppers, subframe stays, then lower the subframe on a jack and lower the transmission out.</li>
+  </ol>
+  <div class="pair">
+    <figure>
+      <div class="shot">
+        <img src="img/app_trans_mount.jpg" alt="Left transmission mount on a 2007 Accent" width="1000" height="563">
+        <span class="pinm" style="left:70%;top:28%">1</span>
+        <span class="pinm" style="left:44%;top:22%">2</span>
+      </div>
+      <figcaption>Left transmission mount, 2007 Accent. 1 = rubber mount. 2 = bracket bolts. (SprocketHead video, 17:42)</figcaption>
+    </figure>
+    <figure><div class="shot"><img src="img/app_slave.png" alt="Hyundai TSB photo: slave cylinder bolts Y and bracket bolts X" width="472" height="365"></div><figcaption>Bulletin 09-SS-005: Y = slave cylinder bolts, X = bracket bolts. (Chilton)</figcaption></figure>
+  </div>
+
+  <h3>Clutch replacement</h3>
+  <ol class="legend">
+    <li>Pull the <strong>release bearing and fork</strong> out of the bellhousing (fork <em>b</em>, bearing <em>c</em> in the photo below). The fork pivots on a ball stud called the fulcrum.</li>
+    <li>Put the alignment tool in the disc so it can't drop. Loosen the <strong>pressure plate bolts in a star pattern</strong>, a turn or two at a time. The video's cover has 6 bolts and 3 dowels.</li>
+    <li><strong>Inspect:</strong> new disc thickness is 8.5 ± 0.3 mm. Check the pressure plate for heat marks, cracks and uneven spring fingers (limit 0.5 mm), the bearing for roughness, and the fork tips for wear. Don't wash the bearing or disc in solvent.</li>
+    <li><strong>Flywheel:</strong> resurface or replace it. The video and forums both recommend it. The factory pages give no runout or minimum-thickness spec for this flywheel, so let the machine shop measure it. Flywheel bolts are <span class="read">117.7–127.5 N·m</span>.</li>
+    <li><strong>Grease, thin films only</strong> (too much makes the clutch slip and shudder). Per the bulletin: fulcrum tip about 0.2 g, inside the bearing 0.5–1.0 g, each bearing clip 0.3–0.5 g, fork pivot groove 0.5–1.0 g, fork-to-slave contact 0.4–0.8 g, input splines about 0.2 g.</li>
+    <li>Clean the flywheel and pressure plate faces with brake cleaner. Fit the disc the way its "flywheel side" marking says, center it with the tool, set the pressure plate on its dowels, then tighten in a star pattern to <span class="read">15–22 N·m</span>.</li>
+    <li>New bearing on the fork, with the fork's tips hooked in the bearing's clips. If you replace the fulcrum: <span class="read">55–60 N·m</span> (factory torque table).</li>
+    <li>Before closing up, refill the clutch reservoir (it's shared with the brakes) and pump the pedal to check the slave isn't leaking. The video caught a leaking slave this way.</li>
+  </ol>
+  <div class="pair">
+    <figure><div class="shot"><img src="img/app_fork_bearing.png" alt="Inside the bellhousing: release fork b and bearing c" width="476" height="364"></div><figcaption>Inside the bellhousing: b = release fork, c = release bearing. (Bulletin 09-SS-005)</figcaption></figure>
+    <figure><div class="shot"><img src="img/app_bearing_grease.png" alt="Release bearing clips being greased" width="472" height="365"></div><figcaption>Grease goes on the bearing's two clips (arrows), a thin film. (Bulletin 09-SS-005)</figcaption></figure>
+  </div>
+
+  <h3>Putting it back together</h3>
+  <ol class="legend">
+    <li>Slide the transmission onto the input shaft straight, then pull it flush with the bolts, not by prying. Bellhousing bolts: upper <span class="read">60–80 N·m</span>, lower <span class="read">43–55 N·m</span>. Starter <span class="read">27–34 N·m</span>.</li>
+    <li>Mounts: transmission mount bracket <span class="read">70–93 N·m</span> (the factory lists 70–95 in the transaxle table and 68.6–93.2 on the engine-removal page; 70–93 meets both), support bracket <span class="read">60–80 N·m</span>, roll stoppers <span class="read">50–65 N·m</span>. Take the support bar's weight off only after the mounts are snug.</li>
+    <li>Route A: subframe <span class="read">93.2–117.7 N·m</span>, stays 44.1–53.9, sway-bar links 98.1–117.7, steering joint 88.3–107.9, tie-rod ends 22.6–33.3 N·m (this list is from service bulletin 09-SS-005; the manual's table prints 24–34 for the tie-rod ends). Then get an alignment check (my judgment).</li>
+    <li>New axle seals (flush) and new circlips. Push each axle in until it clicks. Axle nut <span class="read">200–260 N·m</span> with a new cotter pin, ball joint 100–120, wheels 90–110 N·m.</li>
+    <li>Gear oil: <span class="read">75W-85 GL-4, 1.9 L</span>, through the side fill hole until it runs out. Plugs 60–80 N·m.</li>
+    <li>Cable bracket <span class="read">20–27 N·m</span>, cable ends pinned, then the cable adjustment from test 6. Slave cylinder 15–22 N·m. If the hydraulic line was opened, bleed at the slave: slow pedal strokes, close the bleeder with the pedal held down.</li>
+    <li>Test: pedal firm with the engine off, every gear selects at a standstill, no slip in 3rd/4th, no shudder. Check for leaks at the axle seals and fill plug, then recheck the axle nuts and mounts after a few miles.</li>
+  </ol>
+
+  <h3>Time, and mistakes others made</h3>
+  <p>Hyundai's shop times: transmission swap <span class="read">4.9–5.2 h</span>, clutch <span class="read">5.3 h</span>, on a lift. My estimate for a first-timer on jack stands, route B: <strong>12–20 hours over two days</strong>. One forum owner who called himself "old and slow" took 5 days.</p>
+  <ul class="plain">
+    <li>Draining the gear oil after the axles are out, which spills it from the axle holes.</li>
+    <li>Not supporting the engine: with two mounts off it will drop.</li>
+    <li>Losing the cable-bracket grommets.</li>
+    <li>Letting the transmission hang on the input shaft, which bends the disc.</li>
+    <li>Too much grease, which makes the clutch slip and shudder.</li>
+    <li>Reusing the axle circlips, or prying into the axle seal.</li>
+    <li>Skipping the flywheel resurface, or pairing a new disc with an old pressure plate.</li>
+    <li>Using GL-5 gear oil.</li>
+    <li>Forgetting the cable adjustment afterward.</li>
+  </ul>
+  <p class="sub">Where the sources disagree: the drain plug torque is 60–80 N·m in the transmission table but 35–45 N·m on the axle page (use 60–80). Plug sizes are 17 mm, 15/16 in or 24 mm, depending on the video. The disc's rivet-depth limit is printed as 0.3, 1.1 or 2.1 mm, which doesn't matter with a new disc. Not found for this car: the flywheel runout spec, the axle-nut socket size and the bellhousing bolt lengths.</p>
+</section>
+
+
+<section id="appendix-rebuild">
+  <h2>Appendix C · Rebuilding the transmission</h2>
+  <div class="callout">
+    <strong>Short answer: possible at home, but a used unit usually wins</strong>
+    <p>The M5CF1 can be rebuilt on a bench with ordinary tools plus a <strong>hydraulic press</strong>, a bearing puller and a depth micrometer. The wrenching isn't the hard part. Pressing synchro hubs and bearings on straight, and shimming the bearing end play correctly, is. If the case-open inspection shows only a worn fork or a broken detent spring, a <span class="read">$230–$300</span> parts repair is attractive. If hubs, sleeves or bearings are worn too, parts approach the price of a new transmission, and a <span class="read">$135–$255</span> Utah self-pull unit wins.</p>
+  </div>
+
+  <h3>What's inside, in plain words</h3>
+  <p>Two parallel shafts carry pairs of gears that are always meshed. Each gear spins freely until a <strong>synchro sleeve</strong> slides over and locks it to the shaft. A brass-or-steel <strong>synchro ring</strong> first matches the speeds so it doesn't grind. A <strong>shift fork</strong> rides in a groove around each sleeve and is pinned to a sliding <strong>rail</strong>. Under each rail, a spring-loaded <strong>poppet (detent) ball</strong> clicks into notches to hold it in gear. The factory table lists three causes for jumping out of gear: <em>a worn fork</em>, <em>a broken poppet spring</em>, or <em>too much play between a synchro hub and its sleeve</em>. All three are inside the case.</p>
+  <div class="pair">
+    <figure><div class="shot"><img src="img/app_forks.png" alt="Factory drawing of the M5CF1 shift forks and rails with legend" width="700" height="796"></div><figcaption>The forks and rails, with the factory legend (Kia Rio M5CF1 chapter, Chilton). Fork 1 handles 5th, 6 handles 3rd/4th, 8 handles 1st/2nd.</figcaption></figure>
+    <figure>
+      <div class="shot">
+        <img src="img/app_poppet.png" alt="Factory figure: the three poppet bolts on top of the case" width="402" height="301">
+        <span class="pinm" style="left:29%;top:52%">1</span>
+        <span class="pinm" style="left:31%;top:60%">2</span>
+        <span class="pinm" style="left:43%;top:70%">3</span>
+      </div>
+      <figcaption>1–3 = the three poppet (detent) bolts, each holding a spring and ball that keep one rail in gear. A broken spring here is one of the factory's three pop-out causes. They can be pulled with the case closed, so a spring is worth checking before a full teardown (my suggestion). (2009 Accent factory manual)</figcaption>
+    </figure>
+  </div>
+
+  <h3>The job, in order</h3>
+  <ol class="legend">
+    <li><strong>Remove the transmission</strong> (Appendix B). Drain it, clean the outside.</li>
+    <li><strong>Rear cover off, then the 5th-gear stack:</strong> unstake and remove the lock nut (36 mm thin-wall socket), pull the 5th hub, sleeve, ring and gear. Drive out the 5th fork's roll pin with a 3/16 in punch.</li>
+    <li><strong>Poppet bolts out</strong> (14 mm). Keep each spring and ball with its bore; the springs can differ in length.</li>
+    <li><strong>Split the case.</strong> Shift into 3rd to drive out the 3-4 fork pin, then 1st for the 1-2 pin. The rails and forks lift out as a set. Then the input and output shafts come out together.</li>
+    <li><strong>Inspect before buying anything</strong> (table below). This decides whether to rebuild or buy a used unit.</li>
+    <li><strong>Rebuild the shafts</strong> with the press: hubs and bearings on square, sleeves facing the right way (marks), keys seated.</li>
+    <li><strong>Reassemble</strong>: shafts, rails and forks with new pins, case sealant, then measure and set the bearing end play with spacers per the manual. Fit the poppet balls and springs with sealant on the bolts.</li>
+    <li><strong>Bench test</strong>: turn the input shaft and move the shift lever by hand into every gear. The interlock must stop reverse after 5th until you return to neutral.</li>
+  </ol>
+
+  <h3>What to check, with limits</h3>
+  <div class="scroll">
+  <table class="stack">
+    <thead><tr><th>Part</th><th>Check</th><th>Limit</th></tr></thead>
+    <tbody>
+      <tr><td>Synchro ring to gear cone</td><td>Press the ring on, measure the gap with a feeler gauge</td><td class="num">0.5 mm minimum (factory "limit 0.5 mm"; minimum is my reading)</td></tr>
+      <tr><td>Synchro hub and sleeve</td><td>Sleeve slides smoothly, teeth not rounded</td><td>Replace as a set; no number published</td></tr>
+      <tr><td>Shift fork pads</td><td>Compare with a new fork; look for a step or bright wear</td><td>No number published</td></tr>
+      <tr><td>Poppet springs and balls</td><td>All the same length, no kinks; rail notches not rounded</td><td>No number published; $9.24 each, replace all three</td></tr>
+      <tr><td>Bearings</td><td>Turn smoothly, no play</td><td>Replace pressed-off taper bearings, per the factory</td></tr>
+      <tr><td>Magnet in the case</td><td>Fine paste is normal</td><td>Chunks or tooth pieces mean a broken part</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Parts (Hyundai part numbers, sale prices seen Oct 27)</h3>
+  <ul class="plain">
+    <li>Shift forks: 1st/2nd <code>43841-32000</code> $38.71 · 3rd/4th <code>43861-23100</code> $31.72 · 5th/reverse <code>43862-32000</code> $39.45 (earlier builds: <code>43862-23100</code> $42.21).</li>
+    <li>Poppet spring assembly <code>43835-23001</code>, need 3, $9.24 each. Fork roll pins <code>43842-39000</code>, need 3, $1.37 each.</li>
+    <li>Seals: input $3.69–$8.49, axle seals about $6–$18 aftermarket. Case sealant. 2 L of 75W-85 GL-4.</li>
+    <li>If worn: hub-and-sleeve sets about $371 for all three; bearings about $290 plus about $65 of needle bearings; synchro rings and cones about $380.</li>
+  </ul>
+  <p class="sub">Builds before and after January 2010 use different part numbers for several of these, so match by VIN (question 2 above). Prices are from hyundaipartsdeal.com and kiapartsnow.com.</p>
+
+  <h3>Cost against the alternatives</h3>
+  <div class="scroll">
+  <table class="stack">
+    <thead><tr><th>Option</th><th>Cost</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Fork and spring repair, DIY</td><td class="num">$230–$300 parts</td><td>Only if the inspection shows just that</td></tr>
+      <tr><td>Full rebuild, everything new, DIY</td><td class="num">$950–$1,420 parts</td><td>Near the cost of a new unit</td></tr>
+      <tr><td>New Hyundai transmission</td><td class="num">$1,559–$1,709</td><td>43000-32818 / 43000-23017</td></tr>
+      <tr><td>Used, Utah self-pull</td><td class="num">$135–$255</td><td>Unknown miles; check it's a manual</td></tr>
+      <tr><td>Shop rebuild</td><td class="num">~$1,500–$2,500</td><td>My estimate; no Utah shop posts a price for this gearbox</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p><strong>Time for a first-timer</strong> (my estimate): 15–30 bench hours over several weekends, plus 4–8 hours to remove and reinstall the transmission. Common failures: pressing a hub or bearing crooked, wrong end-play shims (bearings whine or die), a hub or sleeve facing backward, pins dropped into the case, mixed-up poppet springs, and wrong parts from the January 2010 build split.</p>
+  <p><strong>Best videos:</strong> Hyundai's training pair for the earlier, closely related gearbox, <a href="https://www.youtube.com/watch?v=-yfICJKkLhE">disassembly</a> (4:12 detent caps, 5:46 fork pins) and <a href="https://www.youtube.com/watch?v=9GjP2tMLVbQ">assembly</a> (6:22 rails and forks, 11:19 detents, 19:39 interlock test). Then a complete <a href="https://www.youtube.com/watch?v=AyFNA0Xh76U">Accent teardown</a> (6:02 detent plungers, 8:47 reverse rail and control shaft; labelled 2012, possibly a newer gearbox) and its <a href="https://www.youtube.com/watch?v=jl7ymWsl12Q">reassembly</a> (19:09 everything in neutral before the control shaft).</p>
+  <p class="sub">Sources: the 2009 Accent factory manual on charm.li (the 2010 folder has no overhaul chapter), Chilton's Kia Rio M5CF1 overhaul chapter, Hyundai and Kia parts catalogs. Some factory torques contradict each other (case bolts, poppet bolts), so check <code>rebuild.md</code> before torquing.</p>
+</section>
+
+
+<section id="appendix-findings">
+  <h2>Appendix D · Things we might find along the way</h2>
+  <p>Short guides for what could turn up during the tests or once things are apart. Each says what you'd see, what it means, and what to do. Prices were seen Oct 27, 2026. Full detail and sources are in <code>outcomes_outside.md</code> and <code>outcomes_inside.md</code> in the research folder.</p>
+
+  <h3>Quick index</h3>
+  <div class="scroll">
+  <table class="stack">
+    <thead><tr><th>You find</th><th>Likely meaning</th><th>Parts · time</th></tr></thead>
+    <tbody>
+      <tr><td>Cable end flops, slides off its lever, bushing crumbs</td><td>Worn cable-end bushing</td><td class="num">$26–$33 kit · 0.5–1 h</td></tr>
+      <tr><td>Levers work by hand, gears wrong after reassembly</td><td>Cable adjustment off</td><td class="num">none · 0.4 h</td></tr>
+      <tr><td>Cable bracket bent, bolt snapped or thread stripped</td><td>Bracket or case thread</td><td class="num">insert kit $20–$125 · 1–3 h</td></tr>
+      <tr><td>Transmission levers stiff, rust at the shaft boot</td><td>Corroded control shaft</td><td class="num">boot $3.77, seal $8.14 · 1–4 h</td></tr>
+      <tr><td>Stick floppy with cables attached</td><td>Shifter base part broke</td><td class="num">$2–$30 per part · 1–2 h</td></tr>
+      <tr><td>A cable broken, kinked or seized</td><td>Replace the cable pair</td><td class="num">$97–$149 · 4 h</td></tr>
+      <tr><td>Mount rubber torn, engine rocks</td><td>Failed mount</td><td class="num">$26–$78 each · 0.5 h each</td></tr>
+      <tr><td>Metal chunks or broken teeth in the gear oil</td><td>Broken internals</td><td class="num">used transmission</td></tr>
+      <tr><td>Clutch soaked in engine oil</td><td>Rear main seal leak</td><td class="num">$3–$28 seal · +1–2 h</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>D1 · Moving the car while it's stuck</h3>
+  <p>Hyundai's towing rules: a <strong>flatbed is best</strong>. A wheel-lift tow is OK only with the <em>front</em> wheels off the ground and the transmission in neutral, for no more than 19 miles at no more than 30 mph. <strong>If it won't go into neutral, flatbed only.</strong> Never tow it with all four wheels down, because that requires a transmission "in correct working order" (bulletin 11-GI-007).</p>
+  <p>To get neutral by hand: air box and battery off, photograph and paint-mark both levers, pull the two snap pins and lift the cables off. Move the side-to-side lever to the middle (3rd/4th) column and the other lever to its center click. Confirm with the roll test. If a lever won't move at all, it's a flatbed.</p>
+
+  <h3>D2 · Crumbled cable-end bushing</h3>
+  <p>The end of a cable wobbles on its lever stud or has popped off, with bits of bushing around it. The cable can stay in the car: pick out the old bushing, press in the Torque Solution TS-SCB-210 kit (Delrin, fits 2000–2011 Accents, $25–$33), and snap the end back on. Reset neutral at both ends if the levers moved.</p>
+
+  <h3>D3 · Cable seized, kinked or broken</h3>
+  <p>With the ends unclipped, one cable won't slide by hand, or it's snapped. The two cables are sold as one assembly (<code>43794-xxxx</code>, the suffix depends on build date; Pioneer CA8124 $97.79). The factory procedure removes only the center console, not the dash: cabin end off the shifter, the plate on the firewall (2 nuts), the transmission end, then pull the pair into the engine bay. Factory time 4.0 h (+0.6 h with A/C). Owners of a related Rio say feeding cables through the firewall is the fiddly part, and to work one cable at a time. Install with <strong>both ends in neutral</strong>, then adjust (test 6).</p>
+
+  <h3>D4 · Rusted control shaft at the transmission</h3>
+  <p>With the cables off, a lever is stiff or gritty, there's rust where its shaft enters the case, and the rubber boot is torn. You can tell it from an internal failure because the lever still travels and clicks through its positions. A broken part inside usually lets it move freely without engaging, or stops it dead in one direction (my reading; no manual gives a test). The fix that worked on a related Kia: wire-brush, penetrating oil, work the lever back and forth, soak overnight, repeat. Then grease it and replace the boot (<code>43127-32000</code>, $3.77). Keep torch heat away from the aluminum case and the seal. If the lever moves freely but nothing engages, it's an internal problem: see Appendix C.</p>
+
+  <h3>D5 · Bracket, threads, shifter base</h3>
+  <ul class="plain">
+    <li><strong>Cable bracket</strong> loose or bent: re-tighten to 20–27 N·m, or swap in the old car's or a yard bracket. A stripped hole in the aluminum case takes a thread insert (Time-Sert or Heli-Coil). Measure the bolt first; M8 × 1.25 is likely but unconfirmed.</li>
+    <li><strong>Shifter base</strong> cracked, or the select-lever pin broken: the parts are $2–$30 each from a Hyundai parts site, or about $40 for a whole shifter at a yard. 0.4–0.7 h with the console out.</li>
+    <li><strong>Cable adjustment wrong</strong> after reassembly (missing gears, hard reverse): most often a transmission lever moved while the cable was off. Set both ends to neutral, then do the adjustment from test 6.</li>
+  </ul>
+
+  <h3>D6 · What the gear oil tells you</h3>
+  <ul class="plain">
+    <li><strong>Full, amber, fine gray paste on the magnet:</strong> normal. A clean drain doesn't clear the forks and detent springs, which wear without shedding much metal.</li>
+    <li><strong>Low or empty:</strong> find the leak (axle seals, input seal, control-shaft seal) and fix it while it's apart. Empty means the bearings ran dry, so treat the gearbox as suspect.</li>
+    <li><strong>Burnt smell, blue-tinted parts:</strong> overheated. Swap the transmission.</li>
+    <li><strong>Milky:</strong> water got in. Find the path; rust inside means swap.</li>
+    <li><strong>Chips you can feel an edge on, broken teeth, a snap ring:</strong> broken internals. Swap to a used unit; don't rebuild by guessing. A loose fragment can also be what's jamming a rail.</li>
+  </ul>
+
+  <h3>D7 · At the clutch</h3>
+  <ul class="plain">
+    <li><strong>Disc wet with engine oil</strong> (thin, smells like motor oil, wet behind the flywheel): the <strong>rear main seal</strong> is leaking. Replace it now, while the flywheel is off. OEM <code>21443-22000</code> (72 × 96 × 9 mm), aftermarket $3–$24 (ITM 1500303, Fel-Pro BS40672, SKF 28308). Pry the old one out without scratching the crank, then tap the new one in flush. <strong>Trap:</strong> RockAuto also lists Victor Reinz 815406910 for this car, but that's the later engine's seal. If the joint around the seal's housing is what's wet, the oil pan has to come off, a much bigger job.</li>
+    <li><strong>Disc wet with gear oil</strong> (thick, sulfur smell): the transmission's input seal ($3.69–$8.49). Replace it.</li>
+    <li><strong>Flywheel</strong> glazed or lightly scored: resurface it ($40–$100). Cracks, deep grooves, blue heat marks or damaged starter teeth: replace it ($68–$106).</li>
+    <li><strong>Pressure plate fingers broken, bearing destroyed:</strong> the bearing was dragging. Fit a new kit, and check the slave pushrod and pedal free play so it doesn't repeat.</li>
+    <li><strong>Release fork</strong> worn where it touches the bearing: $9–$35 at a yard, or $108 from Hyundai (<code>41430-23200</code>). <strong>New slave already leaking:</strong> replace it ($12–$40) and bleed.</li>
+  </ul>
+
+  <h3>D8 · Axles and differential</h3>
+  <p>A broken axle or differential can feel like popping out of gear: the engine revs and the car doesn't move. But the stick still shifts normally, so it <strong>doesn't explain the owner's locked shifter</strong>. While the axles are out anyway, replace both axle seals (manual transmission: <code>43119-39020</code> right, <code>43119-39030</code> left, about $22 each; the cheaper Pioneer 759100 is tagged for automatics) and fit new circlips. The axle nut is 200–260 N·m and single-use. Reports of its socket size disagree, so bring 30, 32 and 34 mm.</p>
+
+  <h3>D9 · Donor transmission traps</h3>
+  <ul class="plain">
+    <li><strong>Manual or automatic?</strong> No yard list says, but NHTSA's VIN decoder often does (the donor list above was decoded that way). Look for three pedals, a 5-speed knob, and two thin shift cables plus a clutch slave on the transmission. An automatic has cooler lines and a dipstick.</li>
+    <li><strong>"Blue" trim:</strong> the 2010 Accent Blue (3-door only) has taller gears. Its 4th is 0.886 against 1.031 standard, and its 5th 0.733 against 0.837. In a GLS that's about 12–14% lower RPM in 4th and 5th, sluggish on Utah grades. Avoid a Blue box unless the owner's car is a Blue. Bench check: turns of the input shaft per turn of the differential in 4th are about 4.18 standard and 3.59 Blue. A 2009 listed as "BLUE" can't be the Blue trim (it started in 2010), so that's probably the paint color.</li>
+    <li><strong>Build-date split:</strong> every post-January-2010 complete transmission in Hyundai's catalog is tagged "Accent Blue". The standard box, <code>43000-23017</code>, covers November 2006 to January 2010. <strong>My read: a 2006–2009 Accent is the right donor for a GLS or SE.</strong> A dealer parts counter can confirm from the owner's VIN.</li>
+    <li><strong>Kia Rio donors:</strong> same gearbox number, ratios and forks, but the bolt-on brackets are unverified and interchange guides don't list them as swappable. Only if you can test-fit the brackets. Avoid 2010–2011 Rios.</li>
+    <li><strong>Move over from the old box:</strong> the mount bracket, cable bracket and grommets, wiring bracket, back-up light switch and speed sensor (new O-rings). Fit new input and axle seals to the donor.</li>
+    <li><strong>Test it before installing:</strong> check the oil and magnet, check the input shaft for play, then turn the input through every gear by hand (each should turn the differential smoothly). After 5th, reverse should need a deliberate push.</li>
+    <li><strong>At the yard:</strong> it weighs about 77 lb. Budget 3–5 h. Bring metric sockets 10–19 mm, a breaker bar, axle-nut sockets 30/32/34 mm, a battery impact, pry bars, a pin punch, penetrating oil, a drain pan, and a jack or plank. Pulling the clutch first gives room to swing it out. Many yards ban torches.</li>
+  </ul>
+
+  <h3>D10 · Seized bolts (Utah road salt)</h3>
+  <p>Expect stubborn subframe bolts, axle nuts, mount bolts, exhaust hangers, and steel bolts in the aluminum case. Soak with penetrating oil the day before and again an hour before; a 50/50 mix of ATF and acetone did best in one published test. Tap the head to crack the rust, and work bolts back and forth rather than with one steady pull. Gentle torch heat on the nut or boss helps, but keep it away from brake lines, rubber, fuel and CV boots. Break the axle nut loose with the wheel on the ground. For a snapped bolt, try a left-hand drill bit before an extractor. Stripped threads in the case take an insert (Time-Sert M10 × 1.25 kit $124.99).</p>
+
+  <h3>D11 · Cheap to do while it's apart</h3>
+  <p>Front axles (manual-transmission versions) about $125 a pair, both axle seals $44, input seal $7, outer tie-rod ends $15–$50, lower ball joints $14–$34, all four mounts $130–$228, clutch hose $6, gear oil $25–$40. That's about <strong>$370–$540</strong> together, and each one avoids its own 2–4 hour job later.</p>
+
+  <h3>D12 · Is the car worth fixing?</h3>
+  <div class="scroll">
+  <table class="stack">
+    <thead><tr><th>Source</th><th>2010 Accent GLS value</th></tr></thead>
+    <tbody>
+      <tr><td>Kelley Blue Book, Good</td><td class="num">$2,800 private · $1,375 trade-in</td></tr>
+      <tr><td>Edmunds, clean, 5-speed</td><td class="num">$1,908 private · $873 trade-in</td></tr>
+      <tr><td>Utah listings (2011–2013 Accents)</td><td class="num">$1,300–$3,999</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>My judgment: a running 2010 GLS manual is worth about <strong>$2,000–$3,000</strong> private-party in Utah, and maybe $500–$1,000 as-is with a dead transmission. The cable or bushing fix, or a <strong>DIY used transmission plus clutch ($450–$900)</strong>, is clearly worth doing. A shop transmission swap ($900–$1,650) is borderline. A rebuild or a new transmission costs about the whole car. Selling as-is makes more sense only if the transmission is badly damaged <em>and</em> something else is wrong too: body rust, title problems, engine trouble, or no budget for a shop.</p>
+</section>
+
+
+<section>
+  <h2>Sources</h2>
+  <ul class="plain">
+    <li>Factory service manual, 2010 Accent 1.6 (LEMON Manuals, free). <a href="https://lemon-manuals.la/Hyundai/2010/Accent%20L4-1.6L/Repair%20and%20Diagnosis/Transmission%20and%20Drivetrain/Manual%20Transmission%2FTransaxle/Testing%20and%20Inspection/Symptom%20Related%20Diagnostic%20Procedures/">Manual transaxle symptom table</a> · <a href="https://lemon-manuals.la/Hyundai/2010/Accent%20L4-1.6L/Repair%20and%20Diagnosis/Transmission%20and%20Drivetrain/Clutch/Testing%20and%20Inspection/Symptom%20Related%20Diagnostic%20Procedures/">clutch symptom table</a>. Cable removal and adjustment, transmission R&amp;R, torque tables. Every torque value in this guide was checked against a full offline copy of the manual on Oct 28; values that come from the bulletins instead are labeled where they appear.</li>
+    <li>Factory labor times: <a href="https://lemon-manuals.la/Hyundai/2010/Accent%20L4-1.6L/Parts%20and%20Labor/Transmission%20and%20Drivetrain/Manual%20Transmission%2FTransaxle/Labor%20Times/">transaxle</a> 4.9 h (5.2 h moving parts over, +0.4 h with power steering, 12.2 h rebuild) · <a href="https://lemon-manuals.la/Hyundai/2010/Accent%20L4-1.6L/Parts%20and%20Labor/Transmission%20and%20Drivetrain/Clutch/Clutch%20Disc/Labor%20Times/">clutch</a> 5.3 h · <a href="https://lemon-manuals.la/Hyundai/2010/Accent%20L4-1.6L/Parts%20and%20Labor/Transmission%20and%20Drivetrain/Manual%20Transmission%2FTransaxle/Shift%20Linkage/Shift%20Cable/Labor%20Times/">shift cable</a> 4.0 h (+0.6 h with A/C).</li>
+    <li>Chilton Library (Gale), through Utah's Online Public Library: service bulletin 06-40-011 (cable adjustment), labor times (transmission R&amp;R 3.6 h Hyundai warranty time / 5.3 h shop time; cable replace 2.7 / 4.0; clutch 3.7 / 5.4).</li>
+    <li>Yard inventories: picknpull.com, tearapart.com and utpap.com, checked Oct 27 by hand and Oct 28 by script; pullnsave.com and car-part.com by hand on Oct 27. Donor transmissions decoded from each car's VIN with NHTSA's vPIC decoder.</li>
+    <li>Same transmission (M5CF1) in: 2006–2011 Accent 1.6, 2006–2011 Kia Rio and Rio5 (M5CF1 / M5CF1-1), 2010–2011 Kia Soul 1.6 manual.</li>
+    <li>YouTube frames: "Repairing a Broken Gear Stick on a Hyundai" (EM1PFhcFT8U), 2009 Accent engine mount (AEmysD7o9_I), 2009 Accent shifter (bLimbYr62kk).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Send back</h2>
+  <ul class="plain">
+    <li>Answers to the <a href="#questions">questions for the owner</a> near the top.</li>
+    <li>Test 1: which directions the stick moves with the engine off.</li>
+    <li>Test 2: does it roll in neutral?</li>
+    <li>Test 4: do the transmission levers move into gears by hand?</li>
+    <li>A photo of each cable end and of the drain plug magnet.</li>
+    <li>The door-jamb sticker (build date, VIN) and the trim (GS, GLS, SE or Blue).</li>
+  </ul>
+</section>
+
+</div>

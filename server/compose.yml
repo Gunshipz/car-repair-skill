@@ -1,0 +1,16 @@
+# MyGarage, LAN only (no tunnel). Used for LiveLink (WiCAN live data) only; repairs live in the Obsidian notes.
+services:
+  mygarage:
+    image: ghcr.io/homelabforge/mygarage:3.9.0
+    container_name: garage-mygarage
+    ports:
+      - "8686:8686"
+    volumes:
+      - ./mygarage-data:/data   # created by deploy.sh as uid 1000 (the image runs as uid 1000)
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8686/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

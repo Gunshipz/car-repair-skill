@@ -1,0 +1,6 @@
+[
+  {"name": "Accent donor", "make": "Hyundai", "models": ["Accent"], "y1": 2006, "y2": 2011,
+   "sources": ["picknpull_slc", "tearapart_slc", "tearapart_ogden", "utpap_ogden", "utpap_orem"]},
+  {"name": "Rio donor", "make": "Kia", "models": ["Rio", "Rio5"], "y1": 2006, "y2": 2011,
+   "sources": ["picknpull_slc", "tearapart_slc", "tearapart_ogden", "utpap_ogden", "utpap_orem"]}
+]

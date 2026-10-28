@@ -1,0 +1,225 @@
+<html>
+<style type="text/css">
+.resultsTable table, th{
+	padding-left: 3px;
+	margin:0px auto;
+	margin-bottom: 20px;
+	height:38px;
+	color: #fff; 
+	background: #a50729;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight:600;
+	font-size: 18px;
+
+}
+.resultsTable tr:nth-child(even){
+	height:40px;
+	background: #f0f0f0;
+}
+.resultsTable tr:nth-child(odd){
+	height:40px;
+	background: #ffffff url(/images/tabl_line.gif) repeat-x;
+}
+.resultsTable td:first-child + td{
+	font-weight: bold;
+}
+.resultsTable td:first-child + td + td{
+	font-weight: bold;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 600;
+	float: left;
+}
+.btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary:active.focus, .btn-primary:active:focus, .btn-primary:active:hover, .open>.dropdown-toggle.btn-primary.focus, .open>.dropdown-toggle.btn-primary:focus, .open>.dropdown-toggle.btn-primary:hover {
+    color: #fff;
+    background-color: #204d74;
+    border-color: #122b40;
+}
+.btn-primary.active, .btn-primary:active, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #286090;
+    border-color: #204d74;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #d22320;
+    border-color: #a50729;
+}
+.btn.active, .btn:active {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+    box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+}
+.btn-primary {
+    color: #fff;
+    background-color: #a50729;
+    border-color: #7b1720;
+}
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+table {
+	border-collapse: collapse;
+	width: 100%;
+	font-family: 'Source Sans Pro', sans-serif;
+	text-align: center;
+}
+.update{
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 11px;
+}
+@media (max-width: 768px) {
+	.resultsTable table, th,td{
+	height:22px;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight:400;
+	font-size: 12px;
+
+}
+}
+</style>
+	<body>
+		<div class="container">
+			<div class="row row-centered">
+			<div class="update">
+			Ogden - Vehicle Inventory Updated: 10/28/26</div>
+
+<p></p>
+			
+
+				<script type="text/javascript">
+				var modelMap = {"ACURA":["CL","MDX","RDX","RL","RSX","TL","TSX"],"ATV \/ MOTORCYCLE":["FLYSCOOTERS","HONDA","KAWASAKI","KTM","SUZUKI","TRIUMPH","YAMAHA"],"AUDI":["A3","A4","A5","A6","ALLROAD","Q5"],"BMW":["128I","325CI","325XI","328I","330I","335XI","525","528I","530I","530XI","535I","X1","X3","X5","Z4"],"BUICK":["CENTURY","ENCLAVE","ENCORE","LACROSSE","LESABRE","LUCERNE","PARK AVENUE","REGAL","RENDEZVOUS"],"CADILLAC":["CTS","DEVILLE","DTS","ESCALADE","ESCALADE ESV"],"CHEVROLET":["ASTRO","AVALANCHE","AVEO","AVEO5","BLAZER","C10","CAPTIVA SPORT","CAVALIER","CLASSIC","COBALT","COLORADO","CORVETTE","CRUZE","CRUZE LIMITED","EQUINOX","EXPRESS","G20","G2500","G30 SPORTVAN","HHR","IMPALA","K1500","K20","K2500","MALIBU","PRIZM","S10","SILVERADO","SONIC","SPARK EV","SUBURBAN","TAHOE","TRAILBLAZER","TRAVERSE","VENTURE"],"CHRYSLER":["200","300C","300M","ASPEN","CONCORDE","PT CRUISER","SEBRING","TOWN & COUNTRY"],"DATSUN":["720"],"DODGE":["AVENGER","CALIBER","CARAVAN","CHARGER","DAKOTA","DART","DURANGO","GRAND CARAVAN","INTREPID","JOURNEY","MAGNUM","NEON","NITRO","RAM 1500","RAM 2500","RAM 50","RAM VAN","SPIRIT","STRATUS"],"FORD":["C-MAX HYBRID","CLUB WAGON","CROWN VICTORIA","E-150","E-350 WAGON","ECONOLINE","EDGE","ESCAPE","ESCORT","EXPEDITION","EXPEDITION EL","EXPLORER","F-100","F-150","F-250","F-350","FIESTA","FLEX","FOCUS","FREESTYLE","FUSION","FUSION HYBRID","PINTO","RANGER","TAURUS","TRANSIT CONNECT"],"GEO":["METRO","PRIZM"],"GMC":["ACADIA","ENVOY","ENVOY XL","ENVOY XUV","G2500 VANDURA","JIMMY","SIERRA","TERRAIN","YUKON"],"HONDA":["ACCORD","CIVIC","CR-V","CR-Z","ELEMENT","FIT","INSIGHT","ODYSSEY","PASSPORT","PILOT","PRELUDE"],"HYUNDAI":["ACCENT","ELANTRA","ELANTRA GT","ENTOURAGE","SANTA FE","SANTA FE SPORT","SONATA","SONATA HYBRID","TIBURON","TUCSON","VELOSTER"],"INFINITI":["G35","QX4","QX56"],"INTERNATIONAL":["LLN200"],"ISUZU":["TROOPER"],"JAGUAR":["S-TYPE","X-TYPE","XJ-12","XJ-6"],"JEEP":["CHEROKEE","CJ5","COMMANDER","COMPASS","GRAND CHEROKEE","LIBERTY","PATRIOT"],"KIA":["FORTE","OPTIMA","RIO","RONDO","SEDONA","SORENTO","SOUL","SPECTRA","SPORTAGE"],"LAND ROVER":["LR2","LR4"],"LEXUS":["ES 300","GS 400","GS 430","IS 250","IS 300","RX 300","RX 330","RX 350","SC 400"],"LINCOLN":["MKZ","NAVIGATOR"],"MAZDA":["626","CX-9","MAZDA3","MAZDA5","MAZDA6","MAZDASPEED6","MPV","MX-5 MIATA","PROTEGE","RX-7","TRIBUTE"],"MERCEDES-BENZ":["240","300","C240","C280","C300","CLS550","E-CLASS"],"MERCURY":["GRAND MARQUIS","MARINER","MOUNTAINEER","SABLE"],"MINI":["COOPER","COOPER COUNTRYMAN"],"MITSUBISHI":["ECLIPSE","ENDEAVOR","GALANT","LANCER","MONTERO SPORT","OUTLANDER","RAIDER"],"NISSAN":["200SX","300ZX","ALTIMA","CUBE","FRONTIER","LEAF","MAXIMA","MURANO","PATHFINDER","PICKUP","QUEST","ROGUE","SENTRA","TITAN","VERSA","XTERRA"],"OLDSMOBILE":["BRAVADA","CUTLASS SUPREME"],"PONTIAC":["BONNEVILLE","G6","GRAND AM","GRAND PRIX","MONTANA","SUNFIRE","VIBE"],"PORSCHE":["CAYENNE"],"SAAB":["9000"],"SATURN":["AURA","ION","L SERIES","L200","L300","OUTLOOK","S SERIES","SL-1","SL-2","VUE"],"SCION":["TC","XB","XD"],"SUBARU":["B9 TRIBECA","FORESTER","IMPREZA","LEGACY","OUTBACK"],"SUZUKI":["AERIO","ESTEEM","GRAND VITARA","SX4 CROSSOVER","XL-7"],"TOYOTA":["4RUNNER","AVALON","CAMRY","CAMRY SOLARA","COROLLA","ECHO","HIGHLANDER","MATRIX","PRIUS","RAV4","SEQUOIA","SIENNA","T-100","TACOMA","TUNDRA"],"VOLKSWAGEN":["CC","GTI","JETTA","JETTA III","NEW BEETLE","PASSAT","RABBIT","TIGUAN","TOUAREG"],"VOLVO":["850 SERIES","S40","S60","S80","XC70","XC90"]};
+				var updateModels = function() { 
+						var makeSel = document.getElementById("makeSelect");
+						var modelSel = document.getElementById("modelsSelect");
+						var make = makeSel.value;
+						var models = modelMap[make];
+
+						// Remove children from modelSel
+						while (modelSel.firstChild) {
+								modelSel.removeChild(modelSel.firstChild);
+						}
+
+						// Create "any" element and append
+						var sel = document.createElement('option');
+						sel.value = '';
+						sel.innerHTML = '(any)';
+						modelSel.appendChild(sel);
+
+						// Create new select elements and append them to modelSel
+						for (var i = 0; i < models.length; i++) {
+								var sel = document.createElement('option');
+								sel.value = models[i];
+								sel.innerHTML = models[i];
+								modelSel.appendChild(sel);
+						}
+				};
+				window.onload = function() { 
+						document.getElementById("makeSelect").onchange = updateModels;
+						updateModels();
+				};
+				</script>
+
+
+
+				<div id="cars-form">
+					<form method='get'>
+						<div class="form-group">
+							<table class="table">
+								<tr>
+									<td>
+										<label>Make:</label>
+										<select class="form-control" name="make" id="makeSelect">
+											<option value='ACURA'>ACURA</option><option value='ATV / MOTORCYCLE'>ATV / MOTORCYCLE</option><option value='AUDI'>AUDI</option><option value='BMW'>BMW</option><option value='BUICK'>BUICK</option><option value='CADILLAC'>CADILLAC</option><option value='CHEVROLET'>CHEVROLET</option><option value='CHRYSLER'>CHRYSLER</option><option value='DATSUN'>DATSUN</option><option value='DODGE'>DODGE</option><option value='FORD'>FORD</option><option value='GEO'>GEO</option><option value='GMC'>GMC</option><option value='HONDA'>HONDA</option><option value='HYUNDAI'>HYUNDAI</option><option value='INFINITI'>INFINITI</option><option value='INTERNATIONAL'>INTERNATIONAL</option><option value='ISUZU'>ISUZU</option><option value='JAGUAR'>JAGUAR</option><option value='JEEP'>JEEP</option><option value='KIA'>KIA</option><option value='LAND ROVER'>LAND ROVER</option><option value='LEXUS'>LEXUS</option><option value='LINCOLN'>LINCOLN</option><option value='MAZDA'>MAZDA</option><option value='MERCEDES-BENZ'>MERCEDES-BENZ</option><option value='MERCURY'>MERCURY</option><option value='MINI'>MINI</option><option value='MITSUBISHI'>MITSUBISHI</option><option value='NISSAN'>NISSAN</option><option value='OLDSMOBILE'>OLDSMOBILE</option><option value='PONTIAC'>PONTIAC</option><option value='PORSCHE'>PORSCHE</option><option value='SAAB'>SAAB</option><option value='SATURN'>SATURN</option><option value='SCION'>SCION</option><option value='SUBARU'>SUBARU</option><option value='SUZUKI'>SUZUKI</option><option value='TOYOTA'>TOYOTA</option><option value='VOLKSWAGEN'>VOLKSWAGEN</option><option value='VOLVO'>VOLVO</option>										</select>
+									</td>
+									<td>
+										<label>Model:</label>
+										<select class="form-control" name="model" id="modelsSelect">
+											<option value="">(any)</option>
+											<option value='CL'>CL</option><option value='MDX'>MDX</option><option value='RDX'>RDX</option><option value='RL'>RL</option><option value='RSX'>RSX</option><option value='TL'>TL</option><option value='TSX'>TSX</option><option value='FLYSCOOTERS'>FLYSCOOTERS</option><option value='HONDA'>HONDA</option><option value='KAWASAKI'>KAWASAKI</option><option value='KTM'>KTM</option><option value='SUZUKI'>SUZUKI</option><option value='TRIUMPH'>TRIUMPH</option><option value='YAMAHA'>YAMAHA</option><option value='A3'>A3</option><option value='A4'>A4</option><option value='A5'>A5</option><option value='A6'>A6</option><option value='ALLROAD'>ALLROAD</option><option value='Q5'>Q5</option><option value='128I'>128I</option><option value='325CI'>325CI</option><option value='325XI'>325XI</option><option value='328I'>328I</option><option value='330I'>330I</option><option value='335XI'>335XI</option><option value='525'>525</option><option value='528I'>528I</option><option value='530I'>530I</option><option value='530XI'>530XI</option><option value='535I'>535I</option><option value='X1'>X1</option><option value='X3'>X3</option><option value='X5'>X5</option><option value='Z4'>Z4</option><option value='CENTURY'>CENTURY</option><option value='ENCLAVE'>ENCLAVE</option><option value='ENCORE'>ENCORE</option><option value='LACROSSE'>LACROSSE</option><option value='LESABRE'>LESABRE</option><option value='LUCERNE'>LUCERNE</option><option value='PARK AVENUE'>PARK AVENUE</option><option value='REGAL'>REGAL</option><option value='RENDEZVOUS'>RENDEZVOUS</option><option value='CTS'>CTS</option><option value='DEVILLE'>DEVILLE</option><option value='DTS'>DTS</option><option value='ESCALADE'>ESCALADE</option><option value='ESCALADE ESV'>ESCALADE ESV</option><option value='ASTRO'>ASTRO</option><option value='AVALANCHE'>AVALANCHE</option><option value='AVEO'>AVEO</option><option value='AVEO5'>AVEO5</option><option value='BLAZER'>BLAZER</option><option value='C10'>C10</option><option value='CAPTIVA SPORT'>CAPTIVA SPORT</option><option value='CAVALIER'>CAVALIER</option><option value='CLASSIC'>CLASSIC</option><option value='COBALT'>COBALT</option><option value='COLORADO'>COLORADO</option><option value='CORVETTE'>CORVETTE</option><option value='CRUZE'>CRUZE</option><option value='CRUZE LIMITED'>CRUZE LIMITED</option><option value='EQUINOX'>EQUINOX</option><option value='EXPRESS'>EXPRESS</option><option value='G20'>G20</option><option value='G2500'>G2500</option><option value='G30 SPORTVAN'>G30 SPORTVAN</option><option value='HHR'>HHR</option><option value='IMPALA'>IMPALA</option><option value='K1500'>K1500</option><option value='K20'>K20</option><option value='K2500'>K2500</option><option value='MALIBU'>MALIBU</option><option value='PRIZM'>PRIZM</option><option value='S10'>S10</option><option value='SILVERADO'>SILVERADO</option><option value='SONIC'>SONIC</option><option value='SPARK EV'>SPARK EV</option><option value='SUBURBAN'>SUBURBAN</option><option value='TAHOE'>TAHOE</option><option value='TRAILBLAZER'>TRAILBLAZER</option><option value='TRAVERSE'>TRAVERSE</option><option value='VENTURE'>VENTURE</option><option value='200'>200</option><option value='300C'>300C</option><option value='300M'>300M</option><option value='ASPEN'>ASPEN</option><option value='CONCORDE'>CONCORDE</option><option value='PT CRUISER'>PT CRUISER</option><option value='SEBRING'>SEBRING</option><option value='TOWN & COUNTRY'>TOWN & COUNTRY</option><option value='720'>720</option><option value='AVENGER'>AVENGER</option><option value='CALIBER'>CALIBER</option><option value='CARAVAN'>CARAVAN</option><option value='CHARGER'>CHARGER</option><option value='DAKOTA'>DAKOTA</option><option value='DART'>DART</option><option value='DURANGO'>DURANGO</option><option value='GRAND CARAVAN'>GRAND CARAVAN</option><option value='INTREPID'>INTREPID</option><option value='JOURNEY'>JOURNEY</option><option value='MAGNUM'>MAGNUM</option><option value='NEON'>NEON</option><option value='NITRO'>NITRO</option><option value='RAM 1500'>RAM 1500</option><option value='RAM 2500'>RAM 2500</option><option value='RAM 50'>RAM 50</option><option value='RAM VAN'>RAM VAN</option><option value='SPIRIT'>SPIRIT</option><option value='STRATUS'>STRATUS</option><option value='C-MAX HYBRID'>C-MAX HYBRID</option><option value='CLUB WAGON'>CLUB WAGON</option><option value='CROWN VICTORIA'>CROWN VICTORIA</option><option value='E-150'>E-150</option><option value='E-350 WAGON'>E-350 WAGON</option><option value='ECONOLINE'>ECONOLINE</option><option value='EDGE'>EDGE</option><option value='ESCAPE'>ESCAPE</option><option value='ESCORT'>ESCORT</option><option value='EXPEDITION'>EXPEDITION</option><option value='EXPEDITION EL'>EXPEDITION EL</option><option value='EXPLORER'>EXPLORER</option><option value='F-100'>F-100</option><option value='F-150'>F-150</option><option value='F-250'>F-250</option><option value='F-350'>F-350</option><option value='FIESTA'>FIESTA</option><option value='FLEX'>FLEX</option><option value='FOCUS'>FOCUS</option><option value='FREESTYLE'>FREESTYLE</option><option value='FUSION'>FUSION</option><option value='FUSION HYBRID'>FUSION HYBRID</option><option value='PINTO'>PINTO</option><option value='RANGER'>RANGER</option><option value='TAURUS'>TAURUS</option><option value='TRANSIT CONNECT'>TRANSIT CONNECT</option><option value='METRO'>METRO</option><option value='PRIZM'>PRIZM</option><option value='ACADIA'>ACADIA</option><option value='ENVOY'>ENVOY</option><option value='ENVOY XL'>ENVOY XL</option><option value='ENVOY XUV'>ENVOY XUV</option><option value='G2500 VANDURA'>G2500 VANDURA</option><option value='JIMMY'>JIMMY</option><option value='SIERRA'>SIERRA</option><option value='TERRAIN'>TERRAIN</option><option value='YUKON'>YUKON</option><option value='ACCORD'>ACCORD</option><option value='CIVIC'>CIVIC</option><option value='CR-V'>CR-V</option><option value='CR-Z'>CR-Z</option><option value='ELEMENT'>ELEMENT</option><option value='FIT'>FIT</option><option value='INSIGHT'>INSIGHT</option><option value='ODYSSEY'>ODYSSEY</option><option value='PASSPORT'>PASSPORT</option><option value='PILOT'>PILOT</option><option value='PRELUDE'>PRELUDE</option><option value='ACCENT'>ACCENT</option><option value='ELANTRA'>ELANTRA</option><option value='ELANTRA GT'>ELANTRA GT</option><option value='ENTOURAGE'>ENTOURAGE</option><option value='SANTA FE'>SANTA FE</option><option value='SANTA FE SPORT'>SANTA FE SPORT</option><option value='SONATA'>SONATA</option><option value='SONATA HYBRID'>SONATA HYBRID</option><option value='TIBURON'>TIBURON</option><option value='TUCSON'>TUCSON</option><option value='VELOSTER'>VELOSTER</option><option value='G35'>G35</option><option value='QX4'>QX4</option><option value='QX56'>QX56</option><option value='LLN200'>LLN200</option><option value='TROOPER'>TROOPER</option><option value='S-TYPE'>S-TYPE</option><option value='X-TYPE'>X-TYPE</option><option value='XJ-12'>XJ-12</option><option value='XJ-6'>XJ-6</option><option value='CHEROKEE'>CHEROKEE</option><option value='CJ5'>CJ5</option><option value='COMMANDER'>COMMANDER</option><option value='COMPASS'>COMPASS</option><option value='GRAND CHEROKEE'>GRAND CHEROKEE</option><option value='LIBERTY'>LIBERTY</option><option value='PATRIOT'>PATRIOT</option><option value='FORTE'>FORTE</option><option value='OPTIMA'>OPTIMA</option><option value='RIO'>RIO</option><option value='RONDO'>RONDO</option><option value='SEDONA'>SEDONA</option><option value='SORENTO'>SORENTO</option><option value='SOUL'>SOUL</option><option value='SPECTRA'>SPECTRA</option><option value='SPORTAGE'>SPORTAGE</option><option value='LR2'>LR2</option><option value='LR4'>LR4</option><option value='ES 300'>ES 300</option><option value='GS 400'>GS 400</option><option value='GS 430'>GS 430</option><option value='IS 250'>IS 250</option><option value='IS 300'>IS 300</option><option value='RX 300'>RX 300</option><option value='RX 330'>RX 330</option><option value='RX 350'>RX 350</option><option value='SC 400'>SC 400</option><option value='MKZ'>MKZ</option><option value='NAVIGATOR'>NAVIGATOR</option><option value='626'>626</option><option value='CX-9'>CX-9</option><option value='MAZDA3'>MAZDA3</option><option value='MAZDA5'>MAZDA5</option><option value='MAZDA6'>MAZDA6</option><option value='MAZDASPEED6'>MAZDASPEED6</option><option value='MPV'>MPV</option><option value='MX-5 MIATA'>MX-5 MIATA</option><option value='PROTEGE'>PROTEGE</option><option value='RX-7'>RX-7</option><option value='TRIBUTE'>TRIBUTE</option><option value='240'>240</option><option value='300'>300</option><option value='C240'>C240</option><option value='C280'>C280</option><option value='C300'>C300</option><option value='CLS550'>CLS550</option><option value='E-CLASS'>E-CLASS</option><option value='GRAND MARQUIS'>GRAND MARQUIS</option><option value='MARINER'>MARINER</option><option value='MOUNTAINEER'>MOUNTAINEER</option><option value='SABLE'>SABLE</option><option value='COOPER'>COOPER</option><option value='COOPER COUNTRYMAN'>COOPER COUNTRYMAN</option><option value='ECLIPSE'>ECLIPSE</option><option value='ENDEAVOR'>ENDEAVOR</option><option value='GALANT'>GALANT</option><option value='LANCER'>LANCER</option><option value='MONTERO SPORT'>MONTERO SPORT</option><option value='OUTLANDER'>OUTLANDER</option><option value='RAIDER'>RAIDER</option><option value='200SX'>200SX</option><option value='300ZX'>300ZX</option><option value='ALTIMA'>ALTIMA</option><option value='CUBE'>CUBE</option><option value='FRONTIER'>FRONTIER</option><option value='LEAF'>LEAF</option><option value='MAXIMA'>MAXIMA</option><option value='MURANO'>MURANO</option><option value='PATHFINDER'>PATHFINDER</option><option value='PICKUP'>PICKUP</option><option value='QUEST'>QUEST</option><option value='ROGUE'>ROGUE</option><option value='SENTRA'>SENTRA</option><option value='TITAN'>TITAN</option><option value='VERSA'>VERSA</option><option value='XTERRA'>XTERRA</option><option value='BRAVADA'>BRAVADA</option><option value='CUTLASS SUPREME'>CUTLASS SUPREME</option><option value='BONNEVILLE'>BONNEVILLE</option><option value='G6'>G6</option><option value='GRAND AM'>GRAND AM</option><option value='GRAND PRIX'>GRAND PRIX</option><option value='MONTANA'>MONTANA</option><option value='SUNFIRE'>SUNFIRE</option><option value='VIBE'>VIBE</option><option value='CAYENNE'>CAYENNE</option><option value='9000'>9000</option><option value='AURA'>AURA</option><option value='ION'>ION</option><option value='L SERIES'>L SERIES</option><option value='L200'>L200</option><option value='L300'>L300</option><option value='OUTLOOK'>OUTLOOK</option><option value='S SERIES'>S SERIES</option><option value='SL-1'>SL-1</option><option value='SL-2'>SL-2</option><option value='VUE'>VUE</option><option value='TC'>TC</option><option value='XB'>XB</option><option value='XD'>XD</option><option value='B9 TRIBECA'>B9 TRIBECA</option><option value='FORESTER'>FORESTER</option><option value='IMPREZA'>IMPREZA</option><option value='LEGACY'>LEGACY</option><option value='OUTBACK'>OUTBACK</option><option value='AERIO'>AERIO</option><option value='ESTEEM'>ESTEEM</option><option value='GRAND VITARA'>GRAND VITARA</option><option value='SX4 CROSSOVER'>SX4 CROSSOVER</option><option value='XL-7'>XL-7</option><option value='4RUNNER'>4RUNNER</option><option value='AVALON'>AVALON</option><option value='CAMRY'>CAMRY</option><option value='CAMRY SOLARA'>CAMRY SOLARA</option><option value='COROLLA'>COROLLA</option><option value='ECHO'>ECHO</option><option value='HIGHLANDER'>HIGHLANDER</option><option value='MATRIX'>MATRIX</option><option value='PRIUS'>PRIUS</option><option value='RAV4'>RAV4</option><option value='SEQUOIA'>SEQUOIA</option><option value='SIENNA'>SIENNA</option><option value='T-100'>T-100</option><option value='TACOMA'>TACOMA</option><option value='TUNDRA'>TUNDRA</option><option value='CC'>CC</option><option value='GTI'>GTI</option><option value='JETTA'>JETTA</option><option value='JETTA III'>JETTA III</option><option value='NEW BEETLE'>NEW BEETLE</option><option value='PASSAT'>PASSAT</option><option value='RABBIT'>RABBIT</option><option value='TIGUAN'>TIGUAN</option><option value='TOUAREG'>TOUAREG</option><option value='850 SERIES'>850 SERIES</option><option value='S40'>S40</option><option value='S60'>S60</option><option value='S80'>S80</option><option value='XC70'>XC70</option><option value='XC90'>XC90</option>										</select>
+									</td>
+									<td>
+										<br />
+										<input type="submit" value="Search" class="btn btn-primary"/>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</form>
+				</div>
+				<table class="table resultsTable parts-table" id="cars-table">
+					<tr>
+						<th>Year</th>
+						<th>Make</th>
+						<th>Model</th>
+						<th>Stock#</th>
+						<th>Engine</th>
+						<th>Vehicle Row</th>
+						<th>Date Set</th>
+						<th>Image</th>
+					</tr>
+										<tr>
+								<td>2016</td>
+								<td>HYUNDAI</td>
+								<td>ACCENT</td>
+								<td>A039393</td>
+								<td>L4 1.6L</td>
+								<td>232</td>
+								<td>10.07.26</td>
+								<td><a href="Ogden-inventory-photos/A039393.jpeg" target='_self'><img src="Ogden-inventory-photos/A039393.jpeg" height="58" width="80" ></a></td>
+						</tr>
+										<tr>
+								<td>2011</td>
+								<td>HYUNDAI</td>
+								<td>ACCENT</td>
+								<td>A039272</td>
+								<td>1.6L</td>
+								<td>228</td>
+								<td>09.11.26</td>
+								<td><a href="Ogden-inventory-photos/A039272.jpeg" target='_self'><img src="Ogden-inventory-photos/A039272.jpeg" height="58" width="80" ></a></td>
+						</tr>
+								</table>
+				</body>
+			</div>
+		</div>
+</html>
